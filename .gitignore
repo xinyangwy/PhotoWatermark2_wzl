@@ -3,9 +3,9 @@
 venv/
 env/
 
-# 日志文件
-*.log
-photomark.log
+# # 日志文件
+# *.log
+# photomark.log
 
 # Python编译文件
 __pycache__/

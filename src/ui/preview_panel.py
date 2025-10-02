@@ -104,51 +104,6 @@ class DraggableWatermarkLabel(QLabel):
     def get_watermark_size(self) -> QPoint:
         """获取水印大小"""
         return self.watermark_size
-    
-    def on_zoom_slider_changed(self, index):
-        """缩放滑块变化处理"""
-        if 0 <= index < len(self.zoom_levels):
-            self.zoom_factor = self.zoom_levels[index]
-            self.zoom_combo.setCurrentIndex(index)
-            self.update_zoom_display()
-            
-    def on_zoom_combo_changed(self, index):
-        """缩放下拉框变化处理"""
-        if 0 <= index < len(self.zoom_levels):
-            self.zoom_factor = self.zoom_levels[index]
-            self.zoom_slider.setValue(index)
-            self.update_zoom_display()
-            
-    def update_zoom_display(self):
-        """更新缩放显示"""
-        if self.watermarked_pixmap and not self.watermarked_pixmap.isNull():
-            # 计算缩放后的尺寸
-            scaled_width = int(self.watermarked_pixmap.width() * self.zoom_factor)
-            scaled_height = int(self.watermarked_pixmap.height() * self.zoom_factor)
-            
-            # 应用缩放
-            scaled_pixmap = self.watermarked_pixmap.scaled(
-                scaled_width, scaled_height, 
-                Qt.AspectRatioMode.KeepAspectRatio, 
-                Qt.TransformationMode.SmoothTransformation
-            )
-            
-            # 更新显示
-            self.watermarked_label.setPixmap(scaled_pixmap)
-            self.watermarked_label.setText("")
-            
-            # 更新百分比标签
-            self.zoom_percent_label.setText(f"{int(self.zoom_factor * 100)}%")
-            
-            # 更新水印大小以适应缩放
-            scaled_watermark_width = int(self.watermark_size.x() * self.zoom_factor)
-            scaled_watermark_height = int(self.watermark_size.y() * self.zoom_factor)
-            self.watermarked_label.set_watermark_size(QPoint(scaled_watermark_width, scaled_watermark_height))
-            
-            # 更新水印位置以适应缩放
-            scaled_watermark_x = int(self.current_watermark_position.x() * self.zoom_factor)
-            scaled_watermark_y = int(self.current_watermark_position.y() * self.zoom_factor)
-            self.watermarked_label.set_watermark_position(QPoint(scaled_watermark_x, scaled_watermark_y))
 
 
 class PreviewPanel(QWidget):
@@ -306,3 +261,48 @@ class PreviewPanel(QWidget):
     def get_watermark_size(self) -> QPoint:
         """获取水印大小"""
         return self.watermark_size
+        
+    def on_zoom_slider_changed(self, index):
+        """缩放滑块变化处理"""
+        if 0 <= index < len(self.zoom_levels):
+            self.zoom_factor = self.zoom_levels[index]
+            self.zoom_combo.setCurrentIndex(index)
+            self.update_zoom_display()
+            
+    def on_zoom_combo_changed(self, index):
+        """缩放下拉框变化处理"""
+        if 0 <= index < len(self.zoom_levels):
+            self.zoom_factor = self.zoom_levels[index]
+            self.zoom_slider.setValue(index)
+            self.update_zoom_display()
+            
+    def update_zoom_display(self):
+        """更新缩放显示"""
+        if self.watermarked_pixmap and not self.watermarked_pixmap.isNull():
+            # 计算缩放后的尺寸
+            scaled_width = int(self.watermarked_pixmap.width() * self.zoom_factor)
+            scaled_height = int(self.watermarked_pixmap.height() * self.zoom_factor)
+            
+            # 应用缩放
+            scaled_pixmap = self.watermarked_pixmap.scaled(
+                scaled_width, scaled_height, 
+                Qt.AspectRatioMode.KeepAspectRatio, 
+                Qt.TransformationMode.SmoothTransformation
+            )
+            
+            # 更新显示
+            self.watermarked_label.setPixmap(scaled_pixmap)
+            self.watermarked_label.setText("")
+            
+            # 更新百分比标签
+            self.zoom_percent_label.setText(f"{int(self.zoom_factor * 100)}%")
+            
+            # 更新水印大小以适应缩放
+            scaled_watermark_width = int(self.watermark_size.x() * self.zoom_factor)
+            scaled_watermark_height = int(self.watermark_size.y() * self.zoom_factor)
+            self.watermarked_label.set_watermark_size(QPoint(scaled_watermark_width, scaled_watermark_height))
+            
+            # 更新水印位置以适应缩放
+            scaled_watermark_x = int(self.current_watermark_position.x() * self.zoom_factor)
+            scaled_watermark_y = int(self.current_watermark_position.y() * self.zoom_factor)
+            self.watermarked_label.set_watermark_position(QPoint(scaled_watermark_x, scaled_watermark_y))
