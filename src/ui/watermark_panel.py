@@ -195,11 +195,48 @@ class WatermarkPanel(QWidget):
         
         # 预设水印
         preset_group = QGroupBox("预设水印")
-        preset_layout = QGridLayout(preset_group)
+        preset_layout = QVBoxLayout(preset_group)
         
-        # 这里应该从resources/watermarks文件夹加载预设水印
-        # 为简化起见，我们添加一些示例按钮
-        preset_layout.addWidget(QLabel("预设水印:"), 0, 0)
+        # 从resources/watermarks文件夹加载预设水印
+        self.preset_watermarks = self.load_preset_watermarks()
+        
+        # 创建预设水印网格布局
+        preset_grid_layout = QGridLayout()
+        preset_grid_layout.setSpacing(5)
+        
+        # 添加预设水印按钮
+        self.preset_buttons = []
+        row, col = 0, 0
+        max_cols = 4  # 每行最多显示4个预设水印
+        
+        for i, (name, file_path) in enumerate(self.preset_watermarks.items()):
+            # 创建预设水印按钮
+            preset_button = QPushButton()
+            preset_button.setFixedSize(60, 60)
+            preset_button.setToolTip(name)
+            preset_button.clicked.connect(lambda checked, path=file_path: self.select_preset_watermark(path))
+            
+            # 为按钮添加文件路径属性，用于高亮显示
+            preset_button.watermark_path = file_path
+            
+            # 加载并设置缩略图
+            pixmap = QPixmap(file_path)
+            if not pixmap.isNull():
+                # 缩放图片到合适大小
+                scaled_pixmap = pixmap.scaled(50, 50, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
+                preset_button.setIcon(QIcon(scaled_pixmap))
+                preset_button.setIconSize(scaled_pixmap.size())
+            
+            preset_grid_layout.addWidget(preset_button, row, col)
+            self.preset_buttons.append(preset_button)
+            
+            # 更新行列位置
+            col += 1
+            if col >= max_cols:
+                col = 0
+                row += 1
+        
+        preset_layout.addLayout(preset_grid_layout)
         
         layout.addWidget(image_group)
         layout.addWidget(preset_group)
@@ -539,3 +576,44 @@ class WatermarkPanel(QWidget):
         
         # 发送设置变更信号，触发实时预览
         self.settings_changed.emit()
+    
+    # 预设水印相关方法
+    def load_preset_watermarks(self):
+        """加载预设水印图片"""
+        preset_watermarks = {}
+        watermarks_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'resources', 'watermarks')
+        
+        if os.path.exists(watermarks_dir):
+            # 支持的图片格式
+            image_extensions = ('.png', '.jpg', '.jpeg', '.bmp', '.gif')
+            
+            for filename in os.listdir(watermarks_dir):
+                if filename.lower().endswith(image_extensions):
+                    file_path = os.path.join(watermarks_dir, filename)
+                    # 使用文件名（不含扩展名）作为显示名称
+                    name = os.path.splitext(filename)[0]
+                    preset_watermarks[name] = file_path
+        
+        return preset_watermarks
+    
+    def select_preset_watermark(self, file_path):
+        """选择预设水印"""
+        if os.path.exists(file_path):
+            self.current_settings['watermark_path'] = file_path
+            self.image_path_label.setText(os.path.basename(file_path))
+            self.settings_changed.emit()
+            
+            # 可选：添加一些视觉反馈，比如高亮选中的预设水印
+            self.highlight_selected_preset(file_path)
+    
+    def highlight_selected_preset(self, selected_path):
+        """高亮显示选中的预设水印"""
+        for button in self.preset_buttons:
+            # 重置所有按钮样式
+            button.setStyleSheet("")
+            
+            # 检查这个按钮对应的文件路径
+            # 由于我们无法直接从按钮获取文件路径，我们需要通过其他方式关联
+            # 这里我们简单地为所有按钮添加一个属性来存储文件路径
+            if hasattr(button, 'watermark_path') and button.watermark_path == selected_path:
+                button.setStyleSheet("border: 2px solid #0078d4; background-color: #f0f0f0;")

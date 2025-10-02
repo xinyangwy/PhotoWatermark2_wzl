@@ -215,6 +215,9 @@ class PreviewPanel(QWidget):
                 if self.original_pixmap:
                     watermarked_size = f"{self.watermarked_pixmap.width()}x{self.watermarked_pixmap.height()}"
                     self.info_label.setText(f"水印预览 ({watermarked_size})")
+                
+                # 确保图片能够完整显示
+                self.ensure_image_fully_visible()
             else:
                 self.watermarked_label.setText("水印生成失败")
                 
@@ -291,10 +294,34 @@ class PreviewPanel(QWidget):
     def update_zoom_display(self):
         """更新缩放显示"""
         if self.watermarked_pixmap and not self.watermarked_pixmap.isNull():
-            # 当缩放为100%时，直接显示原始图片
+            # 获取预览区域的实际可用尺寸
+            scroll_area_size = self.watermarked_scroll.viewport().size()
+            
+            # 计算自适应缩放比例，确保图片完整显示
             if self.zoom_factor == 1.0:
-                # 直接显示原始图片
-                self.watermarked_label.setPixmap(self.watermarked_pixmap)
+                # 当缩放为100%时，检查图片是否超出预览区域
+                pixmap_size = self.watermarked_pixmap.size()
+                
+                # 如果图片尺寸大于预览区域，则自动缩小以完整显示
+                if pixmap_size.width() > scroll_area_size.width() or pixmap_size.height() > scroll_area_size.height():
+                    # 计算合适的缩放比例
+                    width_ratio = scroll_area_size.width() / pixmap_size.width()
+                    height_ratio = scroll_area_size.height() / pixmap_size.height()
+                    adaptive_ratio = min(width_ratio, height_ratio)
+                    
+                    # 使用自适应缩放
+                    scaled_width = int(pixmap_size.width() * adaptive_ratio)
+                    scaled_height = int(pixmap_size.height() * adaptive_ratio)
+                    
+                    scaled_pixmap = self.watermarked_pixmap.scaled(
+                        scaled_width, scaled_height,
+                        Qt.AspectRatioMode.KeepAspectRatio,
+                        Qt.TransformationMode.SmoothTransformation
+                    )
+                    self.watermarked_label.setPixmap(scaled_pixmap)
+                else:
+                    # 图片尺寸合适，直接显示原始图片
+                    self.watermarked_label.setPixmap(self.watermarked_pixmap)
             else:
                 # 对于其他缩放级别，使用缩放后的图片
                 scaled_width = int(self.watermarked_pixmap.width() * self.zoom_factor)
@@ -324,3 +351,35 @@ class PreviewPanel(QWidget):
             scaled_watermark_x = int(self.current_watermark_position.x() * self.zoom_factor)
             scaled_watermark_y = int(self.current_watermark_position.y() * self.zoom_factor)
             self.watermarked_label.set_watermark_position(QPoint(scaled_watermark_x, scaled_watermark_y))
+    
+    def ensure_image_fully_visible(self):
+        """确保图片能够完整显示在预览窗口中"""
+        if self.watermarked_pixmap and not self.watermarked_pixmap.isNull():
+            # 获取预览区域的实际可用尺寸
+            scroll_area_size = self.watermarked_scroll.viewport().size()
+            pixmap_size = self.watermarked_pixmap.size()
+            
+            # 如果图片尺寸大于预览区域，自动调整缩放级别
+            if pixmap_size.width() > scroll_area_size.width() or pixmap_size.height() > scroll_area_size.height():
+                # 计算合适的缩放比例
+                width_ratio = scroll_area_size.width() / pixmap_size.width()
+                height_ratio = scroll_area_size.height() / pixmap_size.height()
+                adaptive_ratio = min(width_ratio, height_ratio)
+                
+                # 找到最接近的自适应缩放级别
+                best_zoom_index = 3  # 默认100%
+                best_zoom_diff = float('inf')
+                
+                for i, level in enumerate(self.zoom_levels):
+                    diff = abs(level - adaptive_ratio)
+                    if diff < best_zoom_diff:
+                        best_zoom_diff = diff
+                        best_zoom_index = i
+                
+                # 应用自适应缩放级别
+                self.zoom_factor = self.zoom_levels[best_zoom_index]
+                self.zoom_slider.setValue(best_zoom_index)
+                self.zoom_combo.setCurrentIndex(best_zoom_index)
+                
+                # 更新显示
+                self.update_zoom_display()
