@@ -1,0 +1,231 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+预览面板组件
+支持原图和带水印图片的对比显示，支持水印位置拖拽调整
+"""
+
+import os
+from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
+                             QScrollArea, QFrame, QSplitter, QSizePolicy)
+from PyQt6.QtCore import Qt, pyqtSignal, QPoint, QRect
+from PyQt6.QtGui import QPixmap, QPainter, QMouseEvent, QPen, QColor
+
+
+class DraggableWatermarkLabel(QLabel):
+    """可拖拽的水印标签"""
+    
+    position_changed = pyqtSignal(QPoint)  # 水印位置改变信号
+    
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.is_dragging = False
+        self.drag_start_pos = QPoint()
+        self.watermark_pos = QPoint(50, 50)  # 默认水印位置
+        self.watermark_size = QPoint(100, 50)  # 默认水印大小
+        self.show_drag_handle = False
+        
+    def mousePressEvent(self, event: QMouseEvent):
+        """鼠标按下事件"""
+        if event.button() == Qt.MouseButton.LeftButton:
+            # 检查是否点击在水印区域内
+            watermark_rect = QRect(self.watermark_pos, self.watermark_size)
+            if watermark_rect.contains(event.pos()):
+                self.is_dragging = True
+                self.drag_start_pos = event.pos()
+                self.show_drag_handle = True
+                self.update()
+        
+        super().mousePressEvent(event)
+    
+    def mouseMoveEvent(self, event: QMouseEvent):
+        """鼠标移动事件"""
+        if self.is_dragging:
+            # 计算拖拽偏移量
+            delta = event.pos() - self.drag_start_pos
+            self.watermark_pos += delta
+            self.drag_start_pos = event.pos()
+            
+            # 限制水印位置在图片范围内
+            if self.pixmap() and not self.pixmap().isNull():
+                pixmap_size = self.pixmap().size()
+                self.watermark_pos.setX(max(0, min(self.watermark_pos.x(), pixmap_size.width() - self.watermark_size.width())))
+                self.watermark_pos.setY(max(0, min(self.watermark_pos.y(), pixmap_size.height() - self.watermark_size.height())))
+            
+            self.update()
+            self.position_changed.emit(self.watermark_pos)
+        
+        super().mouseMoveEvent(event)
+    
+    def mouseReleaseEvent(self, event: QMouseEvent):
+        """鼠标释放事件"""
+        if event.button() == Qt.MouseButton.LeftButton and self.is_dragging:
+            self.is_dragging = False
+            self.show_drag_handle = False
+            self.update()
+        
+        super().mouseReleaseEvent(event)
+    
+    def paintEvent(self, event):
+        """绘制事件"""
+        super().paintEvent(event)
+        
+        if self.show_drag_handle and self.pixmap() and not self.pixmap().isNull():
+            painter = QPainter(self)
+            painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+            
+            # 绘制水印区域边框
+            pen = QPen(QColor(255, 0, 0, 200), 2)
+            pen.setStyle(Qt.PenStyle.DashLine)
+            painter.setPen(pen)
+            painter.drawRect(QRect(self.watermark_pos, self.watermark_size))
+            
+            # 绘制拖拽手柄
+            handle_rect = QRect(self.watermark_pos.x() + self.watermark_size.width() - 10,
+                              self.watermark_pos.y() + self.watermark_size.height() - 10, 8, 8)
+            painter.fillRect(handle_rect, QColor(255, 0, 0, 200))
+    
+    def set_watermark_position(self, pos: QPoint):
+        """设置水印位置"""
+        self.watermark_pos = pos
+        self.update()
+    
+    def set_watermark_size(self, size: QPoint):
+        """设置水印大小"""
+        self.watermark_size = size
+        self.update()
+    
+    def get_watermark_position(self) -> QPoint:
+        """获取水印位置"""
+        return self.watermark_pos
+    
+    def get_watermark_size(self) -> QPoint:
+        """获取水印大小"""
+        return self.watermark_size
+
+
+class PreviewPanel(QWidget):
+    """预览面板"""
+    
+    position_changed = pyqtSignal(QPoint)  # 水印位置改变信号
+    
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.current_watermark_position = QPoint(50, 50)  # 当前水印位置
+        self.watermark_size = QPoint(100, 50)  # 水印大小
+        self.original_pixmap = None
+        self.watermarked_pixmap = None
+        self.init_ui()
+    
+    def init_ui(self):
+        """初始化界面"""
+        layout = QVBoxLayout(self)
+        
+        # 水印预览区域（使用可拖拽标签）
+        self.watermarked_scroll = QScrollArea()
+        self.watermarked_label = DraggableWatermarkLabel()
+        self.watermarked_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.watermarked_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.watermarked_scroll.setWidget(self.watermarked_label)
+        self.watermarked_scroll.setWidgetResizable(True)
+        
+        # 连接水印位置改变信号
+        self.watermarked_label.position_changed.connect(self.on_watermark_position_changed)
+        
+        # 添加水印预览区域
+        layout.addWidget(self.watermarked_scroll)
+        
+        # 信息显示区域
+        self.info_label = QLabel("请选择一张图片开始预览")
+        self.info_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.info_label.setStyleSheet("color: gray; font-style: italic;")
+        layout.addWidget(self.info_label)
+    
+    def set_image(self, image_path: str):
+        """设置当前处理的图片"""
+        try:
+            self.original_pixmap = QPixmap(image_path)
+            if not self.original_pixmap.isNull():
+                # 更新信息
+                filename = os.path.basename(image_path)
+                size_info = f"{self.original_pixmap.width()}x{self.original_pixmap.height()}"
+                self.info_label.setText(f"当前图片: {filename} ({size_info})")
+                
+                # 清空水印预览
+                self.watermarked_label.setText("请预览水印效果")
+                self.watermarked_pixmap = None
+            else:
+                self.info_label.setText("图片加载失败")
+                
+        except Exception as e:
+            self.info_label.setText(f"加载错误: {str(e)}")
+    
+    def set_watermarked_image(self, pixmap: QPixmap):
+        """设置带水印的图片"""
+        try:
+            self.watermarked_pixmap = pixmap
+            if not self.watermarked_pixmap.isNull():
+                # 缩放图片以适应显示区域
+                scaled_pixmap = self.watermarked_pixmap.scaled(
+                    400, 300, Qt.AspectRatioMode.KeepAspectRatio, 
+                    Qt.TransformationMode.SmoothTransformation
+                )
+                self.watermarked_label.setPixmap(scaled_pixmap)
+                self.watermarked_label.setText("")
+                
+                # 设置水印位置和大小
+                self.watermarked_label.set_watermark_position(self.current_watermark_position)
+                self.watermarked_label.set_watermark_size(self.watermark_size)
+                
+                # 更新信息
+                if self.original_pixmap:
+                    watermarked_size = f"{self.watermarked_pixmap.width()}x{self.watermarked_pixmap.height()}"
+                    self.info_label.setText(f"水印预览 ({watermarked_size})")
+            else:
+                self.watermarked_label.setText("水印生成失败")
+                
+        except Exception as e:
+            self.watermarked_label.setText("水印生成错误")
+            self.info_label.setText(f"水印生成错误: {str(e)}")
+    
+    def clear(self):
+        """清空预览"""
+        self.watermarked_label.clear()
+        self.watermarked_label.setText("请选择图片并预览水印效果")
+        self.original_pixmap = None
+        self.watermarked_pixmap = None
+        self.info_label.setText("请选择一张图片开始预览")
+    
+    def get_original_pixmap(self) -> QPixmap:
+        """获取原图"""
+        return self.original_pixmap
+    
+    def get_watermarked_pixmap(self) -> QPixmap:
+        """获取带水印的图片"""
+        return self.watermarked_pixmap
+    
+    def on_watermark_position_changed(self, position: QPoint):
+        """水印位置改变处理"""
+        self.current_watermark_position = position
+        self.position_changed.emit(position)
+    
+    def set_watermark_position(self, position: QPoint):
+        """设置水印位置"""
+        self.current_watermark_position = position
+        if self.watermarked_label:
+            self.watermarked_label.set_watermark_position(position)
+    
+    def set_watermark_size(self, size: QPoint):
+        """设置水印大小"""
+        self.watermark_size = size
+        if self.watermarked_label:
+            self.watermarked_label.set_watermark_size(size)
+    
+    def get_watermark_position(self) -> QPoint:
+        """获取水印位置"""
+        return self.current_watermark_position
+    
+    def get_watermark_size(self) -> QPoint:
+        """获取水印大小"""
+        return self.watermark_size

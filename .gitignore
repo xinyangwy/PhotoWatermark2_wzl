@@ -1,0 +1,67 @@
+# 虚拟环境
+.venv/
+venv/
+env/
+
+# 日志文件
+*.log
+photomark.log
+
+# Python编译文件
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# IDE配置文件
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 临时文件
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# 构建输出
+build/
+dist/
+*.egg-info/
+
+# 环境变量
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Windows系统文件
+*.lnk
+*.url
+[Dd]esktop.ini
+[Dd]esktop/ini
+
+# macOS文件
+.AppleDouble
+.LSOverride
+
+# Linux文件
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# 其他
+.cache/
+*.sublime-workspace
