@@ -1,0 +1,506 @@
+2025-09-30 11:27:02,006 - __main__ - INFO - 应用程序启动成功
+2025-09-30 11:27:25,060 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:36:12,320 - __main__ - CRITICAL - 应用程序启动失败: unexpected indent (app.py, line 381)
+2025-09-30 11:36:40,083 - __main__ - CRITICAL - 应用程序启动失败: name 'QPoint' is not defined
+2025-09-30 11:37:11,313 - __main__ - INFO - 应用程序启动成功
+2025-09-30 11:44:29,268 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:20,208 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:22,390 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:23,188 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:27,443 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:29,034 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:30,740 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:34,447 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:36,593 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:36,951 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:37,316 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:37,703 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:38,386 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:38,853 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:39,246 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:39,667 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:40,027 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:40,385 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:40,808 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:41,159 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:41,547 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:45:42,693 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:46:54,706 - __main__ - INFO - 应用程序启动成功
+2025-09-30 11:49:57,691 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:49:58,061 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:49:59,962 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:50:01,637 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:50:04,939 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-09-30 11:55:46,881 - __main__ - INFO - 应用程序正常退出
+2025-09-30 11:56:02,163 - __main__ - INFO - 应用程序启动成功
+2025-10-02 20:41:17,301 - __main__ - CRITICAL - 应用程序启动失败: 'ImageListPanel' object has no attribute 'clear_images'
+2025-10-02 20:41:23,090 - __main__ - CRITICAL - 应用程序启动失败: 'ImageListPanel' object has no attribute 'clear_images'
+2025-10-02 20:42:02,541 - __main__ - INFO - 应用程序启动成功
+2025-10-02 20:42:25,741 - __main__ - CRITICAL - 未捕获的异常:
+Traceback (most recent call last):
+  File "D:\Code\GitHub\1\testGuiPhotoMark\src\ui\image_list_panel.py", line 237, in on_item_clicked
+    self.image_selected.emit(image_path)
+TypeError: ImageListPanel.image_selected[str].emit(): argument 1 has unexpected type 'QIcon'
+
+2025-10-02 20:42:29,505 - __main__ - CRITICAL - 未捕获的异常:
+Traceback (most recent call last):
+  File "D:\Code\GitHub\1\testGuiPhotoMark\src\ui\image_list_panel.py", line 237, in on_item_clicked
+    self.image_selected.emit(image_path)
+TypeError: ImageListPanel.image_selected[str].emit(): argument 1 has unexpected type 'QIcon'
+
+2025-10-02 20:42:35,425 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 20:42:44,406 - __main__ - INFO - 应用程序正常退出
+2025-10-02 21:11:55,492 - __main__ - INFO - 应用程序启动成功
+2025-10-02 21:12:22,633 - __main__ - CRITICAL - 未捕获的异常:
+Traceback (most recent call last):
+  File "D:\Code\GitHub\PhotoWatermark2_wzl\src\ui\image_list_panel.py", line 237, in on_item_clicked
+    self.image_selected.emit(image_path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: ImageListPanel.image_selected[str].emit(): argument 1 has unexpected type 'QIcon'
+
+2025-10-02 21:12:45,113 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:45,321 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:45,518 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:47,704 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:52,744 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:53,197 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:53,476 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:53,832 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:54,216 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:55,130 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:55,440 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:55,924 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:56,316 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:56,658 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:57,135 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:57,514 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:58,570 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:59,097 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:59,457 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:12:59,804 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:13:00,423 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:13:01,061 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:13:01,463 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:13:01,808 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:13:02,264 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:13:02,559 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:13:02,985 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:13:03,452 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:13:04,173 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:13:04,861 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark_wzl/images/flower.jpg
+2025-10-02 21:17:37,528 - __main__ - INFO - 应用程序正常退出
+2025-10-02 21:17:55,509 - __main__ - CRITICAL - 应用程序启动失败: 'PreviewPanel' object has no attribute 'on_zoom_slider_changed'
+2025-10-02 21:25:13,600 - __main__ - INFO - 应用程序启动成功
+2025-10-02 21:25:53,142 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:29:28,455 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:29:42,431 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:29:51,052 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:31:54,907 - __main__ - INFO - 应用程序启动成功
+2025-10-02 21:32:07,257 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:32:12,509 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:32:12,926 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:32:13,382 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:32:13,702 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:32:13,929 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:32:14,222 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:32:14,583 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:32:16,179 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:32:17,142 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:32:17,398 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:32:17,663 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:32:17,985 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:32:18,274 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:32:18,565 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:35:59,664 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:36:00,709 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:36:03,828 - __main__ - INFO - 应用程序正常退出
+2025-10-02 21:36:09,210 - __main__ - INFO - 应用程序启动成功
+2025-10-02 21:36:34,138 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:36:41,426 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:36:46,598 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:36:48,150 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:36:49,514 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:36:49,957 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:36:50,863 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:36:51,542 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:36:51,970 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:36:52,375 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:02,983 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:03,584 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:04,448 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:05,687 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:06,186 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:09,518 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:11,550 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:12,188 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:12,663 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:13,081 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:13,453 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:14,342 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:15,109 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:15,642 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:16,087 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:16,454 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:17,405 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:17,658 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:18,139 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:18,629 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:19,060 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:19,379 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:19,723 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:20,033 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:21,293 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:23,235 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:23,724 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:37:37,807 - __main__ - INFO - 应用程序正常退出
+2025-10-02 21:37:38,642 - __main__ - INFO - 应用程序正常退出
+2025-10-02 21:38:02,895 - __main__ - INFO - 应用程序启动成功
+2025-10-02 21:38:39,409 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:38:45,167 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:38:47,222 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:38:47,865 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:38:49,213 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:38:50,251 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:38:50,801 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:38:51,923 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:38:52,589 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:38:53,225 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:40:12,991 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:40:13,485 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:40:14,228 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:40:15,109 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:40:15,600 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:40:15,923 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:40:16,254 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:40:16,563 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:40:16,881 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:40:17,204 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:40:17,522 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:40:18,127 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:43:13,465 - __main__ - INFO - 应用程序正常退出
+2025-10-02 21:44:14,190 - __main__ - INFO - 应用程序启动成功
+2025-10-02 21:44:30,570 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:34,650 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:36,128 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:38,514 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:38,873 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:39,093 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:39,332 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:39,560 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:39,794 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:39,996 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:40,194 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:40,384 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:40,549 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:40,733 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:40,979 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:41,231 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:41,507 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:41,774 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:42,027 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:42,313 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:42,546 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:42,729 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:42,947 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:43,156 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:43,447 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:43,763 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:43,968 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:46,084 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:46,311 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:46,504 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:46,692 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:46,864 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:47,037 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:47,216 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:47,387 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:47,565 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:49,215 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:49,817 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:50,219 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:44:56,783 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:45:12,649 - src.core.watermark_processor - ERROR - 水印图片文件不存在: 
+2025-10-02 21:45:23,094 - __main__ - CRITICAL - 未捕获的异常:
+Traceback (most recent call last):
+  File "D:\Code\GitHub\PhotoWatermark2_wzl\src\ui\image_list_panel.py", line 237, in on_item_clicked
+    self.image_selected.emit(image_path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: ImageListPanel.image_selected[str].emit(): argument 1 has unexpected type 'QIcon'
+
+2025-10-02 21:47:07,894 - __main__ - INFO - 应用程序正常退出
+2025-10-02 21:47:12,152 - __main__ - INFO - 应用程序启动成功
+2025-10-02 21:47:20,167 - __main__ - INFO - 应用程序正常退出
+2025-10-02 21:47:24,264 - __main__ - INFO - 应用程序启动成功
+2025-10-02 21:47:35,959 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:51:21,096 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:51:22,249 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:51:31,876 - __main__ - INFO - 应用程序正常退出
+2025-10-02 21:52:58,154 - __main__ - INFO - 应用程序启动成功
+2025-10-02 21:53:14,864 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:18,843 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:19,392 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:19,616 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:19,796 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:31,994 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:36,136 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:36,481 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:36,683 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:36,873 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:37,093 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:37,355 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:37,587 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:37,755 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:37,947 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:38,157 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:38,416 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:38,640 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:53:50,279 - __main__ - INFO - 应用程序正常退出
+2025-10-02 21:53:54,700 - __main__ - INFO - 应用程序启动成功
+2025-10-02 21:54:16,761 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:54:17,144 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:54:27,801 - __main__ - INFO - 应用程序启动成功
+2025-10-02 21:56:53,328 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:56:53,577 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:56:53,825 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:56:54,155 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:56:54,478 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:56:54,564 - __main__ - CRITICAL - 未捕获的异常:
+Traceback (most recent call last):
+  File "D:\Code\GitHub\PhotoWatermark2_wzl\src\ui\image_list_panel.py", line 237, in on_item_clicked
+    self.image_selected.emit(image_path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: ImageListPanel.image_selected[str].emit(): argument 1 has unexpected type 'QIcon'
+
+2025-10-02 21:57:51,820 - __main__ - INFO - 应用程序启动成功
+2025-10-02 21:58:59,375 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:01,194 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:07,703 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:08,297 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:08,627 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:10,180 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:10,482 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:10,801 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:11,036 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:11,268 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:11,480 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:11,767 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:12,063 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:12,314 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:12,522 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:12,719 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:12,939 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:13,160 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:13,350 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:13,565 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:13,760 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:14,013 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:14,257 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:14,445 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:14,615 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:14,804 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:15,059 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 21:59:17,832 - __main__ - INFO - 应用程序正常退出
+2025-10-02 21:59:18,556 - __main__ - INFO - 应用程序正常退出
+2025-10-02 21:59:21,380 - __main__ - INFO - 应用程序正常退出
+2025-10-02 21:59:37,492 - __main__ - INFO - 应用程序启动成功
+2025-10-02 22:01:09,002 - __main__ - INFO - 应用程序启动成功
+2025-10-02 22:01:18,312 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:02:58,129 - __main__ - INFO - 应用程序启动成功
+2025-10-02 22:03:11,422 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:05:49,859 - __main__ - INFO - 应用程序正常退出
+2025-10-02 22:05:51,620 - __main__ - INFO - 应用程序正常退出
+2025-10-02 22:05:52,002 - __main__ - INFO - 应用程序启动成功
+2025-10-02 22:05:54,008 - __main__ - INFO - 应用程序正常退出
+2025-10-02 22:05:54,475 - __main__ - INFO - 应用程序正常退出
+2025-10-02 22:06:05,570 - __main__ - INFO - 应用程序启动成功
+2025-10-02 22:06:21,937 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:07:02,154 - __main__ - INFO - 应用程序正常退出
+2025-10-02 22:07:53,148 - __main__ - INFO - 应用程序启动成功
+2025-10-02 22:08:06,160 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:08:20,569 - __main__ - INFO - 应用程序正常退出
+2025-10-02 22:08:27,279 - __main__ - INFO - 应用程序启动成功
+2025-10-02 22:08:39,107 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:10:42,301 - __main__ - INFO - 应用程序正常退出
+2025-10-02 22:13:02,220 - __main__ - INFO - 应用程序启动成功
+2025-10-02 22:13:11,973 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:15:30,733 - __main__ - INFO - 应用程序启动成功
+2025-10-02 22:15:40,505 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:00,466 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:00,690 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:00,917 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:01,107 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:01,297 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:01,486 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:05,353 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:06,747 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:07,201 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:07,608 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:07,826 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:08,035 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:08,212 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:08,402 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:08,662 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:08,888 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:09,073 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:09,257 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:09,435 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:09,600 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:09,758 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:09,923 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:10,089 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:10,262 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:10,470 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:10,676 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:10,861 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:11,044 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:11,204 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:11,382 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:11,544 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:11,703 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:11,869 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:12,040 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:12,243 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:12,430 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:12,609 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:12,793 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:12,995 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:13,201 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:16:47,775 - __main__ - INFO - 应用程序正常退出
+2025-10-02 22:16:48,836 - __main__ - INFO - 应用程序正常退出
+2025-10-02 22:20:14,551 - __main__ - INFO - 应用程序启动成功
+2025-10-02 22:20:33,531 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:41,695 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:43,341 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:44,341 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:46,240 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:46,992 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:47,489 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:48,739 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:48,975 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:49,200 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:49,504 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:49,811 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:50,056 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:50,246 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:50,425 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:50,625 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:50,833 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:51,038 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:51,230 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:51,425 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:51,611 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:51,776 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:51,978 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:52,145 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:52,341 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:52,534 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:52,744 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:52,950 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:53,167 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:53,355 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:53,550 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:53,760 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:53,948 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:54,131 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:54,317 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:54,538 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:54,756 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:54,960 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:55,250 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:55,442 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:55,630 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:55,830 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:56,018 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:56,218 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:56,440 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:56,660 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:57,544 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:58,003 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:20:58,337 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:21:00,574 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:21:01,240 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:21:01,592 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:21:01,996 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:21:05,094 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:21:09,673 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:21:10,059 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:21:10,457 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:21:11,093 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:21:11,547 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:21:11,884 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:21:12,445 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:21:13,006 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:21:13,476 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:22:42,847 - __main__ - INFO - 应用程序正常退出
+2025-10-02 22:22:47,866 - __main__ - INFO - 应用程序启动成功
+2025-10-02 22:22:56,475 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:23:00,034 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:26:58,916 - __main__ - INFO - 应用程序启动成功
+2025-10-02 22:27:15,394 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:27:15,578 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-02 22:27:40,454 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:27:41,556 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:27:42,077 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:27:42,786 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:27:43,603 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:27:43,971 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:27:44,592 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:27:49,803 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:31:40,130 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:31:41,153 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:31:41,434 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:31:41,646 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:31:43,049 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:31:50,595 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:31:51,078 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:31:51,645 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:31:52,194 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:31:55,447 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:31:55,961 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:31:56,368 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:31:56,728 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:31:57,083 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:31:57,417 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:01,177 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:03,119 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:03,526 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:04,919 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:05,262 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:06,391 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:06,821 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:07,307 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:09,523 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:09,868 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:10,219 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:10,588 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:10,969 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:12,876 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:13,326 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:32:34,209 - __main__ - INFO - 应用程序启动成功
+2025-10-02 22:32:58,275 - src.core.watermark_processor - ERROR - 水印图片文件不存在: 
+2025-10-02 22:32:58,371 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-02 22:33:02,224 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:33:05,390 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:33:07,285 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:33:08,032 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:33:09,390 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:33:16,331 - __main__ - INFO - 应用程序正常退出
+2025-10-02 22:35:26,277 - __main__ - INFO - 应用程序启动成功
+2025-10-02 22:35:34,889 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:35:35,042 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-02 22:36:17,832 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:36:19,658 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:36:20,386 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:36:38,989 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:36:40,040 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:36:40,636 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:36:41,742 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:36:42,637 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:36:43,036 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:36:43,782 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:36:44,205 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:36:45,032 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:36:46,889 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:36:47,658 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:36:48,766 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:36:49,783 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
