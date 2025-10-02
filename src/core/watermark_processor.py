@@ -88,37 +88,52 @@ class WatermarkProcessor:
             opacity = settings.get('opacity', 80) / 100.0
             color.setAlphaF(opacity)
             
-            # 计算位置
-            position = settings.get('position', 'center')
-            padding = settings.get('padding', 10)
-            x, y = self._calculate_position(image.width(), image.height(), 
-                                          text_width, text_height, position, padding, settings)
-            
-            # 绘制背景（如果设置）
-            if 'background' in settings:
-                bg_color = self._parse_color(settings['background'])
-                bg_opacity = settings.get('background_opacity', 50) / 100.0
-                bg_color.setAlphaF(bg_opacity)
+            # 处理平铺模式
+            tiling = settings.get('tiling', False)
+            if tiling:
+                # 创建虚拟水印图片
+                watermark_image = QImage(text_width, text_height, QImage.Format.Format_ARGB32)
+                watermark_image.fill(Qt.GlobalColor.transparent)
+                temp_painter = QPainter(watermark_image)
+                temp_painter.setFont(font)
+                temp_painter.setPen(QPen(color))
+                temp_painter.drawText(0, text_height - font_metrics.descent(), watermark_text)
+                temp_painter.end()
                 
-                bg_rect = QRect(x - padding, y - padding, 
-                              text_width + 2*padding, text_height + 2*padding)
-                painter.fillRect(bg_rect, QBrush(bg_color))
-            
-            # 应用旋转
-            rotation = settings.get('rotation', 0)
-            if rotation != 0:
-                painter.save()
-                painter.translate(x + text_width/2, y + text_height/2)
-                painter.rotate(rotation)
-                painter.translate(-(x + text_width/2), -(y + text_height/2))
-            
-            # 设置画笔和绘制文本
-            painter.setPen(QPen(color))
-            painter.drawText(x, y + text_height - font_metrics.descent(), watermark_text)
-            
-            # 恢复旋转状态
-            if rotation != 0:
-                painter.restore()
+                # 应用平铺水印
+                self._apply_tiling_watermark(painter, image, watermark_image, settings)
+            else:
+                # 单张水印模式
+                position = settings.get('position', 'center')
+                padding = settings.get('padding', 10)
+                x, y = self._calculate_position(image.width(), image.height(), 
+                                              text_width, text_height, position, padding, settings)
+                
+                # 绘制背景（如果设置）
+                if 'background' in settings:
+                    bg_color = self._parse_color(settings['background'])
+                    bg_opacity = settings.get('background_opacity', 50) / 100.0
+                    bg_color.setAlphaF(bg_opacity)
+                    
+                    bg_rect = QRect(x - padding, y - padding, 
+                                  text_width + 2*padding, text_height + 2*padding)
+                    painter.fillRect(bg_rect, QBrush(bg_color))
+                
+                # 应用旋转
+                rotation = settings.get('rotation', 0)
+                if rotation != 0:
+                    painter.save()
+                    painter.translate(x + text_width/2, y + text_height/2)
+                    painter.rotate(rotation)
+                    painter.translate(-(x + text_width/2), -(y + text_height/2))
+                
+                # 设置画笔和绘制文本
+                painter.setPen(QPen(color))
+                painter.drawText(x, y + text_height - font_metrics.descent(), watermark_text)
+                
+                # 恢复旋转状态
+                if rotation != 0:
+                    painter.restore()
             
             painter.end()
             
@@ -253,14 +268,20 @@ class WatermarkProcessor:
         
         # 处理自定义位置
         if position == 'custom' and settings:
-            custom_x = settings.get('custom_x', 0)
-            custom_y = settings.get('custom_y', 0)
+            # 优先使用x, y (从拖拽更新)
+            if 'x' in settings and 'y' in settings and settings['x'] is not None and settings['y'] is not None:
+                x = int(settings['x'])
+                y = int(settings['y'])
+            else:
+                # 兼容旧代码，使用custom_x, custom_y
+                custom_x = settings.get('custom_x', 0)
+                custom_y = settings.get('custom_y', 0)
+                x = int(custom_x)
+                y = int(custom_y)
             
-            # 将预览面板的相对坐标转换为实际图片的绝对坐标
-            # 这里需要根据预览面板和实际图片的比例进行转换
-            # 为简化起见，我们直接使用自定义坐标，但需要确保在图片范围内
-            x = max(0, min(custom_x, image_width - watermark_width))
-            y = max(0, min(custom_y, image_height - watermark_height))
+            # 确保在图片范围内
+            x = max(0, min(x, image_width - watermark_width))
+            y = max(0, min(y, image_height - watermark_height))
             return (x, y)
         
         # 预设位置

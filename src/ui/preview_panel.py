@@ -55,6 +55,7 @@ class DraggableWatermarkLabel(QLabel):
                 self.watermark_pos.setY(max(0, min(self.watermark_pos.y(), pixmap_size.height() - self.watermark_size.height())))
             
             self.update()
+            # 发送位置变化信号 - 确保发送的是实际图像坐标
             self.position_changed.emit(self.watermark_pos)
         
         super().mouseMoveEvent(event)
@@ -239,8 +240,19 @@ class PreviewPanel(QWidget):
     
     def on_watermark_position_changed(self, position: QPoint):
         """水印位置改变处理"""
-        self.current_watermark_position = position
-        self.position_changed.emit(position)
+        # 存储实际位置（考虑缩放因素）
+        actual_position = QPoint(int(position.x() / self.zoom_factor), int(position.y() / self.zoom_factor))
+        self.current_watermark_position = actual_position
+        
+        # 确保水印位置在图片范围内
+        if self.watermarked_pixmap and not self.watermarked_pixmap.isNull():
+            max_x = self.watermarked_pixmap.width() - int(self.watermark_size.x())
+            max_y = self.watermarked_pixmap.height() - int(self.watermark_size.y())
+            actual_position.setX(max(0, min(actual_position.x(), max_x)))
+            actual_position.setY(max(0, min(actual_position.y(), max_y)))
+            
+        # 发送实际位置信号
+        self.position_changed.emit(actual_position)
     
     def set_watermark_position(self, position: QPoint):
         """设置水印位置"""
@@ -279,19 +291,20 @@ class PreviewPanel(QWidget):
     def update_zoom_display(self):
         """更新缩放显示"""
         if self.watermarked_pixmap and not self.watermarked_pixmap.isNull():
-            # 计算缩放后的尺寸
+            # 创建一个透明的背景图像以支持平铺
             scaled_width = int(self.watermarked_pixmap.width() * self.zoom_factor)
             scaled_height = int(self.watermarked_pixmap.height() * self.zoom_factor)
             
-            # 应用缩放
-            scaled_pixmap = self.watermarked_pixmap.scaled(
-                scaled_width, scaled_height, 
-                Qt.AspectRatioMode.KeepAspectRatio, 
-                Qt.TransformationMode.SmoothTransformation
-            )
+            # 创建一个用于平铺的背景
+            background = QPixmap(scaled_width, scaled_height)
+            background.fill(Qt.GlobalColor.transparent)  # 设置透明背景
+            
+            painter = QPainter(background)
+            painter.drawTiledPixmap(0, 0, scaled_width, scaled_height, self.watermarked_pixmap)
+            painter.end()
             
             # 更新显示
-            self.watermarked_label.setPixmap(scaled_pixmap)
+            self.watermarked_label.setPixmap(background)
             self.watermarked_label.setText("")
             
             # 更新百分比标签

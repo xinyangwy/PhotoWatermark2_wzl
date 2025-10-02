@@ -364,6 +364,7 @@ class PhotoMarkApp(QMainWindow):
         self.current_image_path = image_path
         self.preview_panel.set_image(image_path)
         self.statusbar.showMessage(f"已选择图片: {os.path.basename(image_path)}")
+        self.preview_watermark()
     
     @pyqtSlot(list)
     def on_image_list_changed(self, image_paths: list):
@@ -380,11 +381,16 @@ class PhotoMarkApp(QMainWindow):
     @pyqtSlot(QPoint)
     def on_watermark_position_changed(self, position: QPoint):
         """水印位置拖拽改变"""
-        # 更新文本水印面板的位置设置
-        self.text_watermark_panel.update_position_from_drag(position.x(), position.y())
-        # 更新图片水印面板的位置设置
-        self.image_watermark_panel.update_position_from_drag(position.x(), position.y())
-        # 刷新预览
+        # 获取当前活动的水印面板
+        current_tab = self.settings_tabs.currentIndex()
+        
+        # 根据当前选择的水印类型更新相应面板
+        if current_tab == 0:  # 文本水印
+            self.text_watermark_panel.update_position_from_drag(position.x(), position.y())
+        else:  # 图片水印
+            self.image_watermark_panel.update_position_from_drag(position.x(), position.y())
+            
+        # 立即刷新预览
         if self.current_image_path:
             self.preview_watermark()
     

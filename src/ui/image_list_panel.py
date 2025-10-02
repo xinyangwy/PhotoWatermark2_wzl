@@ -165,7 +165,7 @@ class ImageListPanel(QWidget):
                 item = QListWidgetItem()
                 item.setText(os.path.basename(image_path))
                 item.setToolTip(image_path)
-                item.setData(1, image_path)  # 将路径存储在用户数据中
+                item.setData(Qt.ItemDataRole.UserRole, image_path)  # 将路径存储在用户数据中
                 
                 # 加载缩略图
                 try:
@@ -233,8 +233,9 @@ class ImageListPanel(QWidget):
             
     def on_item_clicked(self, item):
         """列表项被点击"""
-        image_path = item.data(1)
-        self.image_selected.emit(image_path)
+        image_path = item.data(Qt.ItemDataRole.UserRole)
+        if image_path:
+            self.image_selected.emit(image_path)
     
     def remove_selected(self):
         """移除选中的图片"""

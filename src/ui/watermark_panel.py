@@ -520,7 +520,22 @@ class WatermarkPanel(QWidget):
         self.current_settings['custom_x'] = x
         self.current_settings['custom_y'] = y
         
-        # 更新位置按钮状态（如果有自定义按钮的话）
-        # 这里可以添加自定义位置按钮的更新逻辑
+        # 直接设置x和y坐标，用于实时预览
+        self.current_settings['x'] = x
+        self.current_settings['y'] = y
         
+        # 更新位置按钮状态
+        for pos, btn in self.position_buttons.items():
+            btn.setChecked(pos == 'custom')
+            
+        # 更新位置输入框（如果存在）
+        if hasattr(self, 'position_x_spin') and hasattr(self, 'position_y_spin'):
+            self.position_x_spin.blockSignals(True)
+            self.position_y_spin.blockSignals(True)
+            self.position_x_spin.setValue(x)
+            self.position_y_spin.setValue(y)
+            self.position_x_spin.blockSignals(False)
+            self.position_y_spin.blockSignals(False)
+        
+        # 发送设置变更信号，触发实时预览
         self.settings_changed.emit()
