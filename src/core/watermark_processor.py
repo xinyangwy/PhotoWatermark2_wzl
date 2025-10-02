@@ -31,8 +31,8 @@ class WatermarkProcessor:
             image_path: 原图片路径
             watermark_text: 水印文本
             settings: 水印设置字典
-                - font_family: 字体名称 (默认: Arial)
-                - font_size: 字体大小 (默认: 24)
+                - font_family/font: 字体名称 (默认: Arial)
+                - font_size/size: 字体大小 (默认: 24)
                 - bold: 是否粗体 (默认: False)
                 - italic: 是否斜体 (默认: False)
                 - color: 文本颜色 (默认: 白色)
@@ -41,7 +41,7 @@ class WatermarkProcessor:
                 - rotation: 旋转角度 -360到360 (默认: 0)
                 - background: 背景颜色 (可选)
                 - background_opacity: 背景透明度 0-100 (默认: 50)
-                - padding: 内边距 (默认: 10)
+                - padding/margin: 内边距 (默认: 10)
                 
         Returns:
             QPixmap: 添加水印后的图片，失败返回None
@@ -67,9 +67,9 @@ class WatermarkProcessor:
             painter.setRenderHint(QPainter.RenderHint.Antialiasing)
             painter.setRenderHint(QPainter.RenderHint.TextAntialiasing)
             
-            # 设置字体
-            font_family = settings.get('font_family', 'Arial')
-            font_size = settings.get('font_size', 24)
+            # 设置字体 - 兼容新旧参数名
+            font_family = settings.get('font_family', settings.get('font', 'Arial'))
+            font_size = settings.get('font_size', settings.get('size', 24))
             bold = settings.get('bold', False)
             italic = settings.get('italic', False)
             
@@ -88,8 +88,8 @@ class WatermarkProcessor:
             opacity = settings.get('opacity', 80) / 100.0
             color.setAlphaF(opacity)
             
-            # 处理平铺模式
-            tiling = settings.get('tiling', False)
+            # 处理平铺模式 - 兼容新旧参数名
+            tiling = settings.get('tiling', settings.get('tile_mode', False))
             if tiling:
                 # 创建虚拟水印图片
                 watermark_image = QImage(text_width, text_height, QImage.Format.Format_ARGB32)
@@ -105,7 +105,7 @@ class WatermarkProcessor:
             else:
                 # 单张水印模式
                 position = settings.get('position', 'center')
-                padding = settings.get('padding', 10)
+                padding = settings.get('padding', settings.get('margin', 10))
                 x, y = self._calculate_position(image.width(), image.height(), 
                                               text_width, text_height, position, padding, settings)
                 
@@ -157,8 +157,8 @@ class WatermarkProcessor:
                 - opacity: 透明度 0-100 (默认: 80)
                 - position: 位置 ('center', 'top-left', 'top-right', 'bottom-left', 'bottom-right')
                 - rotation: 旋转角度 -360到360 (默认: 0)
-                - tiling: 是否平铺 (默认: False)
-                - tiling_spacing: 平铺间距 (默认: 50)
+                - tiling/tile_mode: 是否平铺 (默认: False)
+                - tiling_spacing/tile_spacing: 平铺间距 (默认: 50)
                 
         Returns:
             QPixmap: 添加水印后的图片，失败返回None
@@ -203,14 +203,14 @@ class WatermarkProcessor:
             opacity = settings.get('opacity', 80) / 100.0
             painter.setOpacity(opacity)
             
-            # 处理平铺模式
-            tiling = settings.get('tiling', False)
+            # 处理平铺模式 - 兼容新旧参数名
+            tiling = settings.get('tiling', settings.get('tile_mode', False))
             if tiling:
                 self._apply_tiling_watermark(painter, image, watermark, settings)
             else:
                 # 单张水印模式
                 position = settings.get('position', 'center')
-                padding = settings.get('padding', 20)
+                padding = settings.get('padding', settings.get('margin', 20))
                 x, y = self._calculate_position(image.width(), image.height(), 
                                               watermark.width(), watermark.height(), 
                                               position, padding, settings)
@@ -241,7 +241,7 @@ class WatermarkProcessor:
     def _apply_tiling_watermark(self, painter: QPainter, image: QImage, 
                                watermark: QImage, settings: Dict[str, Any]):
         """应用平铺水印效果"""
-        spacing = settings.get('tiling_spacing', 50)
+        spacing = settings.get('tiling_spacing', settings.get('tile_spacing', 50))
         
         watermark_width = watermark.width()
         watermark_height = watermark.height()
@@ -284,7 +284,22 @@ class WatermarkProcessor:
             y = max(0, min(y, image_height - watermark_height))
             return (x, y)
         
-        # 预设位置
+        # 预设位置（兼容下划线和连字符格式）
+        position_mapping = {
+            'top_left': 'top-left',
+            'top_center': 'top-center', 
+            'top_right': 'top-right',
+            'center_left': 'center-left',
+            'center': 'center',
+            'center_right': 'center-right',
+            'bottom_left': 'bottom-left',
+            'bottom_center': 'bottom-center',
+            'bottom_right': 'bottom-right'
+        }
+        
+        # 标准化位置格式
+        normalized_position = position_mapping.get(position, position)
+        
         positions = {
             'top-left': (padding, padding),
             'top-center': ((image_width - watermark_width) // 2, padding),
@@ -301,7 +316,7 @@ class WatermarkProcessor:
                            image_height - watermark_height - padding)
         }
         
-        return positions.get(position, positions['center'])
+        return positions.get(normalized_position, positions['center'])
     
     def _parse_color(self, color_input) -> QColor:
         """解析颜色输入"""

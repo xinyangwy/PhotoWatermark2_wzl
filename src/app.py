@@ -29,6 +29,63 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+class ImportImagesThread(QThread):
+    """异步导入图片线程"""
+    
+    progress_updated = pyqtSignal(int, str)  # 进度，文件名
+    finished_signal = pyqtSignal(list)  # 导入成功的图片路径列表
+    error_occurred = pyqtSignal(str)  # 错误信息
+    
+    def __init__(self, image_paths: List[str], parent=None):
+        super().__init__(parent)
+        self.image_paths = image_paths
+        self._is_running = True
+    
+    def run(self):
+        """执行异步导入"""
+        try:
+            valid_images = []
+            total = len(self.image_paths)
+            
+            for i, image_path in enumerate(self.image_paths):
+                if not self._is_running:
+                    break
+                    
+                filename = os.path.basename(image_path)
+                self.progress_updated.emit(int((i + 1) / total * 100), filename)
+                
+                try:
+                    # 验证图片文件
+                    if not os.path.exists(image_path):
+                        logger.warning(f"文件不存在: {image_path}")
+                        continue
+                    
+                    # 检查文件扩展名
+                    valid_extensions = {'.png', '.jpg', '.jpeg', '.bmp', '.gif', '.webp', '.tiff', '.tif'}
+                    if not any(image_path.lower().endswith(ext) for ext in valid_extensions):
+                        logger.warning(f"不支持的图片格式: {image_path}")
+                        continue
+                    
+                    # 尝试加载图片验证有效性
+                    pixmap = QPixmap(image_path)
+                    if not pixmap.isNull():
+                        valid_images.append(image_path)
+                    else:
+                        logger.warning(f"无法加载图片: {image_path}")
+                        
+                except Exception as e:
+                    logger.error(f"验证图片失败 {image_path}: {str(e)}")
+            
+            self.finished_signal.emit(valid_images)
+            
+        except Exception as e:
+            self.error_occurred.emit(str(e))
+    
+    def stop(self):
+        """停止导入"""
+        self._is_running = False
+
+
 class BatchProcessThread(QThread):
     """批量处理线程"""
     
@@ -108,6 +165,7 @@ class PhotoMarkApp(QMainWindow):
         self.current_image_path = None
         self.image_paths = []
         self.batch_thread = None
+        self.import_thread = None  # 异步导入线程
         
         # 创建界面
         self.init_ui()
@@ -395,14 +453,109 @@ class PhotoMarkApp(QMainWindow):
             self.preview_watermark()
     
     def import_images(self):
-        """导入图片"""
-        # 使用图片列表面板的导入功能
-        self.image_list_panel.import_images()
+        """异步导入图片"""
+        try:
+            file_dialog = QFileDialog()
+            file_dialog.setFileMode(QFileDialog.FileMode.ExistingFiles)
+            file_dialog.setNameFilter("图片文件 (*.png *.jpg *.jpeg *.bmp *.gif *.webp *.tiff *.tif);;所有文件 (*)")
+            
+            if file_dialog.exec():
+                selected_files = file_dialog.selectedFiles()
+                if selected_files:
+                    self.start_async_import(selected_files, "导入图片")
+        except Exception as e:
+            logger.error(f"导入图片失败: {str(e)}")
+            QMessageBox.critical(self, "导入错误", f"导入图片时发生错误:\n{str(e)}")
     
     def import_folder(self):
-        """导入文件夹"""
-        # 使用图片列表面板的添加文件夹功能
-        self.image_list_panel.add_folder()
+        """异步导入文件夹"""
+        try:
+            folder_path = QFileDialog.getExistingDirectory(self, "选择图片文件夹")
+            if folder_path:
+                # 收集文件夹中的所有图片文件
+                image_files = []
+                for root, dirs, files in os.walk(folder_path):
+                    for file in files:
+                        valid_extensions = {'.png', '.jpg', '.jpeg', '.bmp', '.gif', '.webp', '.tiff', '.tif'}
+                        if any(file.lower().endswith(ext) for ext in valid_extensions):
+                            image_files.append(os.path.join(root, file))
+                
+                if image_files:
+                    self.start_async_import(image_files, "导入文件夹")
+                else:
+                    QMessageBox.warning(self, "无图片文件", "所选文件夹中没有找到支持的图片文件")
+        except Exception as e:
+            logger.error(f"导入文件夹失败: {str(e)}")
+            QMessageBox.critical(self, "导入错误", f"导入文件夹时发生错误:\n{str(e)}")
+    
+    def start_async_import(self, image_paths: List[str], operation_name: str):
+        """开始异步导入"""
+        # 停止之前的导入线程
+        if self.import_thread and self.import_thread.isRunning():
+            self.import_thread.stop()
+            self.import_thread.wait()
+        
+        # 显示进度条
+        self.image_list_panel.set_progress_visible(True)
+        self.image_list_panel.set_progress_range(0, len(image_paths))
+        self.image_list_panel.set_progress_value(0)
+        
+        # 启动导入线程
+        self.import_thread = ImportImagesThread(image_paths, self)
+        self.import_thread.progress_updated.connect(self.on_import_progress)
+        self.import_thread.finished_signal.connect(self.on_import_finished)
+        self.import_thread.error_occurred.connect(self.on_import_error)
+        
+        self.statusbar.showMessage(f"{operation_name}中... (0/{len(image_paths)})")
+        self.import_thread.start()
+    
+    @pyqtSlot(int, str)
+    def on_import_progress(self, progress: int, filename: str):
+        """导入进度更新"""
+        # 更新图片列表面板的进度条
+        image_paths = self.import_thread.image_paths if self.import_thread else []
+        if image_paths:
+            current_progress = int((progress / 100) * len(image_paths))
+            self.image_list_panel.set_progress_value(current_progress)
+        
+        # 更新状态栏
+        total_count = len(image_paths) if image_paths else 0
+        current_count = int((progress / 100) * total_count) if total_count > 0 else 0
+        self.statusbar.showMessage(f"导入中... ({current_count}/{total_count}) - {filename}")
+    
+    @pyqtSlot(list)
+    def on_import_finished(self, valid_images: List[str]):
+        """导入完成"""
+        # 隐藏进度条
+        self.image_list_panel.set_progress_visible(False)
+        
+        if valid_images:
+            # 批量添加到图片列表
+            self.image_list_panel.add_images(valid_images)
+            
+            success_count = len(valid_images)
+            total_count = len(self.import_thread.image_paths) if self.import_thread else 0
+            
+            self.statusbar.showMessage(f"导入完成! 成功: {success_count}/{total_count} 张图片")
+            
+            if success_count < total_count:
+                QMessageBox.information(self, "导入完成", 
+                                      f"导入完成!\n成功: {success_count} 张\n失败: {total_count - success_count} 张")
+            else:
+                QMessageBox.information(self, "导入成功", f"成功导入 {success_count} 张图片")
+        else:
+            self.statusbar.showMessage("导入完成，但没有有效的图片")
+            QMessageBox.warning(self, "导入失败", "没有找到有效的图片文件")
+    
+    @pyqtSlot(str)
+    def on_import_error(self, error_msg: str):
+        """导入错误"""
+        # 隐藏进度条
+        self.image_list_panel.set_progress_visible(False)
+        
+        logger.error(f"导入错误: {error_msg}")
+        QMessageBox.critical(self, "导入错误", f"导入过程中发生错误:\n{error_msg}")
+        self.statusbar.showMessage("导入失败")
     
     def preview_watermark(self):
         """预览水印效果"""

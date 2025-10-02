@@ -49,9 +49,9 @@ class ConfigManager:
                 "output_directory": "./output",
                 "default_settings": {
                     "text_watermark": {
-                        "text": "水印文字",
+                        "text": "PhotoMark2",
                         "font": "Arial",
-                        "size": 24,
+                        "size": 100,
                         "bold": False,
                         "italic": False,
                         "color": "#FFFFFF",

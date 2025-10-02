@@ -28,7 +28,7 @@ class WatermarkPanel(QWidget):
         # 默认设置
         self.default_settings = {
             'text': {
-                'text': 'PhotoMark',
+                'text': 'PhotoMark2',
                 'font': 'Arial',
                 'size': 36,
                 'bold': True,

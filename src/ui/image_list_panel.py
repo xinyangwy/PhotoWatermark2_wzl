@@ -8,10 +8,12 @@
 
 import os
 import logging
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QListWidget, QListWidgetItem, 
                              QPushButton, QHBoxLayout, QFileDialog, QMessageBox,
                              QLabel, QProgressBar, QFrame, QGridLayout, QGroupBox)
-from PyQt6.QtCore import pyqtSignal, QSize, Qt, QMimeData
+from PyQt6.QtCore import pyqtSignal, QSize, Qt, QMimeData, QThread, pyqtSlot
 from PyQt6.QtGui import QIcon, QPixmap, QDragEnterEvent, QDropEvent
 
 
@@ -66,7 +68,40 @@ class DragDropListWidget(QListWidget):
     def is_image_file(self, file_path):
         """检查文件是否为支持的图片格式"""
         valid_extensions = {'.png', '.jpg', '.jpeg', '.bmp', '.gif', '.webp', '.tiff', '.tif'}
-        return any(file_path.lower().endswith(ext) for ext in valid_extensions)
+        return any(filename.lower().endswith(ext) for ext in valid_extensions)
+
+
+class ThumbnailLoader(QThread):
+    """异步缩略图加载器"""
+    
+    thumbnail_loaded = pyqtSignal(str, QPixmap)
+    
+    def __init__(self, image_paths, parent=None):
+        super().__init__(parent)
+        self.image_paths = image_paths
+        self._is_running = True
+    
+    def run(self):
+        """线程运行函数"""
+        for image_path in self.image_paths:
+            if not self._is_running:
+                break
+                
+            try:
+                pixmap = QPixmap(image_path)
+                if not pixmap.isNull():
+                    # 缩放缩略图
+                    scaled_pixmap = pixmap.scaled(120, 120, Qt.AspectRatioMode.KeepAspectRatio, 
+                                                Qt.TransformationMode.SmoothTransformation)
+                    self.thumbnail_loaded.emit(image_path, scaled_pixmap)
+                else:
+                    logging.getLogger(__name__).warning(f"无法加载图片: {image_path}")
+            except Exception as e:
+                logging.getLogger(__name__).error(f"加载缩略图失败: {image_path}, 错误: {e}")
+    
+    def stop(self):
+        """停止加载"""
+        self._is_running = False
 
 
 class ImageListPanel(QWidget):
@@ -81,6 +116,9 @@ class ImageListPanel(QWidget):
         super().__init__()
         self.image_paths = []  # 存储图片路径
         self.logger = logging.getLogger(__name__)
+        self.thumbnail_cache = {}  # 缩略图缓存
+        self.thumbnail_loader = None  # 缩略图加载器
+        self.pending_thumbnails = set()  # 待加载的缩略图
         self.init_ui()
         
     def init_ui(self):
@@ -144,8 +182,13 @@ class ImageListPanel(QWidget):
         layout.addWidget(button_group)
         
     def add_images(self, image_paths):
-        """添加图片到列表"""
+        """添加图片到列表（异步加载缩略图）"""
         valid_images = []
+        
+        # 停止之前的加载器
+        if self.thumbnail_loader and self.thumbnail_loader.isRunning():
+            self.thumbnail_loader.stop()
+            self.thumbnail_loader.wait()
         
         for image_path in image_paths:
             if image_path not in self.image_paths:
@@ -161,30 +204,29 @@ class ImageListPanel(QWidget):
                 self.image_paths.append(image_path)
                 valid_images.append(image_path)
                 
-                # 创建列表项
+                # 创建列表项（先不加载缩略图）
                 item = QListWidgetItem()
                 item.setText(os.path.basename(image_path))
                 item.setToolTip(image_path)
                 item.setData(Qt.ItemDataRole.UserRole, image_path)  # 将路径存储在用户数据中
                 
-                # 加载缩略图
-                try:
-                    pixmap = QPixmap(image_path)
-                    if not pixmap.isNull():
-                        # 缩放缩略图
-                        scaled_pixmap = pixmap.scaled(120, 120, Qt.AspectRatioMode.KeepAspectRatio, 
-                                                    Qt.TransformationMode.SmoothTransformation)
-                        item.setIcon(QIcon(scaled_pixmap))
-                    else:
-                        self.logger.warning(f"无法加载图片: {image_path}")
-                except Exception as e:
-                    self.logger.error(f"加载缩略图失败: {image_path}, 错误: {e}")
+                # 检查缓存中是否有缩略图
+                if image_path in self.thumbnail_cache:
+                    item.setIcon(QIcon(self.thumbnail_cache[image_path]))
+                else:
+                    # 设置默认图标
+                    item.setIcon(QIcon())
+                    self.pending_thumbnails.add(image_path)
                 
                 self.image_list.addItem(item)
         
         if valid_images:
             self.update_count()
             self.image_list_changed.emit(self.image_paths)
+            
+            # 异步加载缩略图
+            if self.pending_thumbnails:
+                self.start_thumbnail_loading()
             
             # 如果这是第一张图片，自动选中
             if self.image_list.count() > 0 and self.image_list.currentRow() == -1:
@@ -292,6 +334,39 @@ class ImageListPanel(QWidget):
         if current_row >= 0 and current_row < len(self.image_paths):
             return self.image_paths[current_row]
         return None
+    
+    def start_thumbnail_loading(self):
+        """开始异步加载缩略图"""
+        if not self.pending_thumbnails:
+            return
+            
+        # 创建新的加载器
+        self.thumbnail_loader = ThumbnailLoader(list(self.pending_thumbnails), self)
+        self.thumbnail_loader.thumbnail_loaded.connect(self.on_thumbnail_loaded)
+        self.thumbnail_loader.finished.connect(self.on_thumbnail_loading_finished)
+        self.thumbnail_loader.start()
+    
+    @pyqtSlot(str, QPixmap)
+    def on_thumbnail_loaded(self, image_path, pixmap):
+        """缩略图加载完成"""
+        # 添加到缓存
+        self.thumbnail_cache[image_path] = pixmap
+        
+        # 更新列表项图标
+        for i in range(self.image_list.count()):
+            item = self.image_list.item(i)
+            if item.data(Qt.ItemDataRole.UserRole) == image_path:
+                item.setIcon(QIcon(pixmap))
+                break
+        
+        # 从待加载列表中移除
+        self.pending_thumbnails.discard(image_path)
+    
+    @pyqtSlot()
+    def on_thumbnail_loading_finished(self):
+        """缩略图加载完成"""
+        self.logger.info("缩略图加载完成")
+        self.thumbnail_loader = None
     
     def set_progress_visible(self, visible):
         """设置进度条可见性"""
