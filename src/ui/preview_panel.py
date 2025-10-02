@@ -8,7 +8,8 @@
 
 import os
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
-                             QScrollArea, QFrame, QSplitter, QSizePolicy)
+                             QScrollArea, QFrame, QSplitter, QSizePolicy,
+                             QSlider, QComboBox)
 from PyQt6.QtCore import Qt, pyqtSignal, QPoint, QRect
 from PyQt6.QtGui import QPixmap, QPainter, QMouseEvent, QPen, QColor
 
@@ -103,6 +104,51 @@ class DraggableWatermarkLabel(QLabel):
     def get_watermark_size(self) -> QPoint:
         """获取水印大小"""
         return self.watermark_size
+    
+    def on_zoom_slider_changed(self, index):
+        """缩放滑块变化处理"""
+        if 0 <= index < len(self.zoom_levels):
+            self.zoom_factor = self.zoom_levels[index]
+            self.zoom_combo.setCurrentIndex(index)
+            self.update_zoom_display()
+            
+    def on_zoom_combo_changed(self, index):
+        """缩放下拉框变化处理"""
+        if 0 <= index < len(self.zoom_levels):
+            self.zoom_factor = self.zoom_levels[index]
+            self.zoom_slider.setValue(index)
+            self.update_zoom_display()
+            
+    def update_zoom_display(self):
+        """更新缩放显示"""
+        if self.watermarked_pixmap and not self.watermarked_pixmap.isNull():
+            # 计算缩放后的尺寸
+            scaled_width = int(self.watermarked_pixmap.width() * self.zoom_factor)
+            scaled_height = int(self.watermarked_pixmap.height() * self.zoom_factor)
+            
+            # 应用缩放
+            scaled_pixmap = self.watermarked_pixmap.scaled(
+                scaled_width, scaled_height, 
+                Qt.AspectRatioMode.KeepAspectRatio, 
+                Qt.TransformationMode.SmoothTransformation
+            )
+            
+            # 更新显示
+            self.watermarked_label.setPixmap(scaled_pixmap)
+            self.watermarked_label.setText("")
+            
+            # 更新百分比标签
+            self.zoom_percent_label.setText(f"{int(self.zoom_factor * 100)}%")
+            
+            # 更新水印大小以适应缩放
+            scaled_watermark_width = int(self.watermark_size.x() * self.zoom_factor)
+            scaled_watermark_height = int(self.watermark_size.y() * self.zoom_factor)
+            self.watermarked_label.set_watermark_size(QPoint(scaled_watermark_width, scaled_watermark_height))
+            
+            # 更新水印位置以适应缩放
+            scaled_watermark_x = int(self.current_watermark_position.x() * self.zoom_factor)
+            scaled_watermark_y = int(self.current_watermark_position.y() * self.zoom_factor)
+            self.watermarked_label.set_watermark_position(QPoint(scaled_watermark_x, scaled_watermark_y))
 
 
 class PreviewPanel(QWidget):
@@ -116,6 +162,8 @@ class PreviewPanel(QWidget):
         self.watermark_size = QPoint(100, 50)  # 水印大小
         self.original_pixmap = None
         self.watermarked_pixmap = None
+        self.zoom_factor = 1.0  # 缩放系数，默认为100%
+        self.zoom_levels = [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0]  # 预设缩放级别
         self.init_ui()
     
     def init_ui(self):
@@ -135,6 +183,40 @@ class PreviewPanel(QWidget):
         
         # 添加水印预览区域
         layout.addWidget(self.watermarked_scroll)
+        
+        # 缩放控制区域
+        zoom_layout = QHBoxLayout()
+        
+        # 缩放标签
+        zoom_label = QLabel("缩放:")
+        zoom_layout.addWidget(zoom_label)
+        
+        # 缩放滑块
+        self.zoom_slider = QSlider(Qt.Orientation.Horizontal)
+        self.zoom_slider.setRange(0, len(self.zoom_levels) - 1)
+        self.zoom_slider.setValue(3)  # 默认100%
+        self.zoom_slider.setMinimumWidth(150)
+        self.zoom_slider.valueChanged.connect(self.on_zoom_slider_changed)
+        zoom_layout.addWidget(self.zoom_slider)
+        
+        # 缩放百分比显示
+        self.zoom_percent_label = QLabel("100%")
+        self.zoom_percent_label.setMinimumWidth(50)
+        self.zoom_percent_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        zoom_layout.addWidget(self.zoom_percent_label)
+        
+        # 缩放下拉框
+        self.zoom_combo = QComboBox()
+        for level in self.zoom_levels:
+            self.zoom_combo.addItem(f"{int(level * 100)}%")
+        self.zoom_combo.setCurrentIndex(3)  # 默认100%
+        self.zoom_combo.currentIndexChanged.connect(self.on_zoom_combo_changed)
+        zoom_layout.addWidget(self.zoom_combo)
+        
+        # 添加填充
+        zoom_layout.addStretch()
+        
+        layout.addLayout(zoom_layout)
         
         # 信息显示区域
         self.info_label = QLabel("请选择一张图片开始预览")
@@ -166,13 +248,8 @@ class PreviewPanel(QWidget):
         try:
             self.watermarked_pixmap = pixmap
             if not self.watermarked_pixmap.isNull():
-                # 缩放图片以适应显示区域
-                scaled_pixmap = self.watermarked_pixmap.scaled(
-                    400, 300, Qt.AspectRatioMode.KeepAspectRatio, 
-                    Qt.TransformationMode.SmoothTransformation
-                )
-                self.watermarked_label.setPixmap(scaled_pixmap)
-                self.watermarked_label.setText("")
+                # 应用当前缩放系数显示图片
+                self.update_zoom_display()
                 
                 # 设置水印位置和大小
                 self.watermarked_label.set_watermark_position(self.current_watermark_position)
