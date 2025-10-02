@@ -291,20 +291,25 @@ class PreviewPanel(QWidget):
     def update_zoom_display(self):
         """更新缩放显示"""
         if self.watermarked_pixmap and not self.watermarked_pixmap.isNull():
-            # 创建一个透明的背景图像以支持平铺
-            scaled_width = int(self.watermarked_pixmap.width() * self.zoom_factor)
-            scaled_height = int(self.watermarked_pixmap.height() * self.zoom_factor)
+            # 当缩放为100%时，直接显示原始图片
+            if self.zoom_factor == 1.0:
+                # 直接显示原始图片
+                self.watermarked_label.setPixmap(self.watermarked_pixmap)
+            else:
+                # 对于其他缩放级别，使用缩放后的图片
+                scaled_width = int(self.watermarked_pixmap.width() * self.zoom_factor)
+                scaled_height = int(self.watermarked_pixmap.height() * self.zoom_factor)
+                
+                # 使用平滑缩放
+                scaled_pixmap = self.watermarked_pixmap.scaled(
+                    scaled_width, scaled_height,
+                    Qt.AspectRatioMode.KeepAspectRatio,
+                    Qt.TransformationMode.SmoothTransformation
+                )
+                
+                # 更新显示
+                self.watermarked_label.setPixmap(scaled_pixmap)
             
-            # 创建一个用于平铺的背景
-            background = QPixmap(scaled_width, scaled_height)
-            background.fill(Qt.GlobalColor.transparent)  # 设置透明背景
-            
-            painter = QPainter(background)
-            painter.drawTiledPixmap(0, 0, scaled_width, scaled_height, self.watermarked_pixmap)
-            painter.end()
-            
-            # 更新显示
-            self.watermarked_label.setPixmap(background)
             self.watermarked_label.setText("")
             
             # 更新百分比标签
