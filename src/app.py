@@ -185,10 +185,6 @@ class PhotoMarkApp(QMainWindow):
         # 创建主布局
         main_layout = QVBoxLayout(central_widget)
         
-        # 创建顶部工具栏
-        self.create_top_toolbar()
-        main_layout.addWidget(self.top_toolbar)
-        
         # 创建主内容区域
         content_widget = QWidget()
         content_layout = QHBoxLayout(content_widget)
@@ -233,45 +229,9 @@ class PhotoMarkApp(QMainWindow):
         self.top_toolbar.setIconSize(QSize(32, 32))
         self.top_toolbar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
         
-        # 导入按钮
-        import_action = QAction("导入图片", self)
-        import_action.setIconText("导入图片")
-        import_action.triggered.connect(self.import_images)
-        self.top_toolbar.addAction(import_action)
+
         
-        # 导入文件夹按钮
-        import_folder_action = QAction("导入文件夹", self)
-        import_folder_action.setIconText("导入文件夹")
-        import_folder_action.triggered.connect(self.import_folder)
-        self.top_toolbar.addAction(import_folder_action)
-        
-        self.top_toolbar.addSeparator()
-        
-        # 预览按钮
-        preview_action = QAction("预览效果", self)
-        preview_action.setIconText("预览效果")
-        preview_action.triggered.connect(self.preview_watermark)
-        self.top_toolbar.addAction(preview_action)
-        
-        # 批量处理按钮
-        batch_action = QAction("批量处理", self)
-        batch_action.setIconText("批量处理")
-        batch_action.triggered.connect(self.batch_process)
-        self.top_toolbar.addAction(batch_action)
-        
-        self.top_toolbar.addSeparator()
-        
-        # 保存设置按钮
-        save_settings_action = QAction("保存设置", self)
-        save_settings_action.setIconText("保存设置")
-        save_settings_action.triggered.connect(self.save_settings)
-        self.top_toolbar.addAction(save_settings_action)
-        
-        # 加载设置按钮
-        load_settings_action = QAction("加载设置", self)
-        load_settings_action.setIconText("加载设置")
-        load_settings_action.triggered.connect(self.load_settings)
-        self.top_toolbar.addAction(load_settings_action)
+
     
     def create_settings_tabs(self):
         """创建设置标签页"""
@@ -381,6 +341,13 @@ class PhotoMarkApp(QMainWindow):
         
         file_menu.addSeparator()
         
+        batch_action = QAction('批量处理', self)
+        batch_action.setShortcut('Ctrl+B')
+        batch_action.triggered.connect(self.batch_process)
+        file_menu.addAction(batch_action)
+        
+        file_menu.addSeparator()
+        
         exit_action = QAction('退出', self)
         exit_action.setShortcut('Ctrl+Q')
         exit_action.triggered.connect(self.close)
@@ -395,6 +362,22 @@ class PhotoMarkApp(QMainWindow):
         
         # 视图菜单
         view_menu = menubar.addMenu('视图')
+        
+        preview_action = QAction('预览效果', self)
+        preview_action.setShortcut('Ctrl+P')
+        preview_action.triggered.connect(self.preview_watermark)
+        view_menu.addAction(preview_action)
+        
+        # 设置菜单
+        settings_menu = menubar.addMenu('设置')
+        
+        save_settings_action = QAction('保存设置', self)
+        save_settings_action.triggered.connect(self.save_settings)
+        settings_menu.addAction(save_settings_action)
+        
+        load_settings_action = QAction('加载设置', self)
+        load_settings_action.triggered.connect(self.load_settings)
+        settings_menu.addAction(load_settings_action)
         
         # 帮助菜单
         help_menu = menubar.addMenu('帮助')

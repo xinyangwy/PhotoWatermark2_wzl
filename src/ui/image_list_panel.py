@@ -68,7 +68,7 @@ class DragDropListWidget(QListWidget):
     def is_image_file(self, file_path):
         """检查文件是否为支持的图片格式"""
         valid_extensions = {'.png', '.jpg', '.jpeg', '.bmp', '.gif', '.webp', '.tiff', '.tif'}
-        return any(filename.lower().endswith(ext) for ext in valid_extensions)
+        return any(file_path.lower().endswith(ext) for ext in valid_extensions)
 
 
 class ThumbnailLoader(QThread):

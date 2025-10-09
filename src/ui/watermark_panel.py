@@ -9,7 +9,8 @@
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QGroupBox, QFormLayout, 
                              QLineEdit, QPushButton, QComboBox, QSlider, 
                              QCheckBox, QColorDialog, QLabel, QSpinBox,
-                             QHBoxLayout, QFileDialog, QGridLayout, QFrame)
+                             QHBoxLayout, QFileDialog, QGridLayout, QFrame, QSizePolicy,
+                             QScrollArea)
 from PyQt6.QtCore import pyqtSignal, Qt
 from PyQt6.QtGui import QColor, QPixmap, QIcon
 import os
@@ -58,8 +59,48 @@ class WatermarkPanel(QWidget):
         self.init_ui()
         
     def init_ui(self):
-        """初始化UI"""
-        layout = QVBoxLayout(self)
+        """初始化UI，添加滚动条以解决控件和标签显示不全的问题"""
+        # 创建滚动区域
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        
+        # 设置滚动条样式使其更加明显
+        scroll_area.setStyleSheet("""
+            QScrollBar:vertical {
+                width: 15px;
+                background: #f0f0f0;
+                margin: 0px;
+                border-radius: 4px;
+            }
+            QScrollBar::handle:vertical {
+                background: #888;
+                min-height: 20px;
+                border-radius: 4px;
+            }
+            QScrollBar::handle:vertical:hover {
+                background: #666;
+            }
+            QScrollBar::add-line:vertical,
+            QScrollBar::sub-line:vertical {
+                background: #ccc;
+                height: 10px;
+                subcontrol-origin: margin;
+            }
+            QScrollBar::add-line:vertical:hover,
+            QScrollBar::sub-line:vertical:hover {
+                background: #aaa;
+            }
+            QScrollBar::add-page:vertical,
+            QScrollBar::sub-page:vertical {
+                background: #e0e0e0;
+            }
+        """)
+        
+        # 创建滚动区域的内部widget
+        scroll_content = QWidget()
+        layout = QVBoxLayout(scroll_content)
         layout.setSpacing(10)
         layout.setContentsMargins(5, 5, 5, 5)
         
@@ -82,6 +123,14 @@ class WatermarkPanel(QWidget):
         self.create_export_ui(layout)
         
         layout.addStretch()
+        
+        # 将滚动内容widget设置到滚动区域
+        scroll_area.setWidget(scroll_content)
+        
+        # 设置主布局
+        main_layout = QVBoxLayout(self)
+        main_layout.setContentsMargins(0, 0, 0, 0)
+        main_layout.addWidget(scroll_area)
         
     def create_text_watermark_ui(self, layout):
         """创建文本水印UI"""
@@ -280,10 +329,20 @@ class WatermarkPanel(QWidget):
         """创建位置和样式设置UI"""
         pos_style_group = QGroupBox("位置和样式")
         pos_style_layout = QVBoxLayout(pos_style_group)
+        # 设置布局伸展因子，确保空间分配合理
+        pos_style_layout.setContentsMargins(10, 10, 10, 10)
+        pos_style_layout.setSpacing(10)
         
         # 位置设置
         position_group = QGroupBox("位置设置")
         position_layout = QGridLayout(position_group)
+        # 设置网格布局的行列伸缩因子
+        for i in range(4):  # 4行
+            position_layout.setRowStretch(i, 1)
+        for i in range(3):  # 3列
+            position_layout.setColumnStretch(i, 1)
+        position_layout.setSpacing(5)
+        position_layout.setContentsMargins(10, 10, 10, 10)
         
         positions = [
             ("左上", "top_left", 0, 0), ("中上", "top_center", 0, 1), ("右上", "top_right", 0, 2),
@@ -296,6 +355,8 @@ class WatermarkPanel(QWidget):
         for text, pos, row, col in positions:
             btn = QPushButton(text)
             btn.setCheckable(True)
+            btn.setMinimumSize(60, 30)  # 设置按钮最小尺寸
+            btn.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)  # 设置按钮可扩展
             if pos == self.current_settings['position']:
                 btn.setChecked(True)
             btn.clicked.connect(lambda checked, p=pos: self.set_position(p))
@@ -312,8 +373,10 @@ class WatermarkPanel(QWidget):
         self.margin_spin.setRange(0, 200)
         self.margin_spin.setValue(self.current_settings['margin'])
         self.margin_spin.valueChanged.connect(self.on_margin_changed)
+        self.margin_spin.setSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Fixed)  # 设置可扩展
         margin_layout.addWidget(self.margin_spin)
         margin_layout.addWidget(QLabel("像素"))
+        margin_layout.addStretch()  # 添加伸缩空间
         
         pos_style_layout.addLayout(margin_layout)
         
@@ -325,6 +388,7 @@ class WatermarkPanel(QWidget):
         self.rotation_slider.setRange(0, 360)
         self.rotation_slider.setValue(self.current_settings['rotation'])
         self.rotation_slider.valueChanged.connect(self.on_rotation_changed)
+        self.rotation_slider.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)  # 设置可扩展
         rotation_layout.addWidget(self.rotation_slider)
         
         self.rotation_spin = QSpinBox()
@@ -334,8 +398,11 @@ class WatermarkPanel(QWidget):
         rotation_layout.addWidget(self.rotation_spin)
         
         pos_style_layout.addLayout(rotation_layout)
+        pos_style_layout.addStretch()  # 添加伸缩空间确保底部不会被拉伸
         
         layout.addWidget(pos_style_group)
+        # 设置组盒在布局中的伸展因子
+        layout.setStretchFactor(pos_style_group, 1)
         
     def create_export_ui(self, layout):
         """创建导出设置UI"""
@@ -422,7 +489,16 @@ class WatermarkPanel(QWidget):
         
     def select_color(self):
         """选择颜色"""
-        color = QColorDialog.getColor(self.current_settings['color'], self, "选择颜色")
+        # 检查color类型，如果是字符串则转换为QColor对象
+        initial_color = self.current_settings['color']
+        if isinstance(initial_color, str):
+            initial_color = QColor(initial_color)
+            # 如果字符串无法转换为有效的颜色，则使用默认白色
+            if not initial_color.isValid():
+                initial_color = QColor(255, 255, 255)  # 默认白色
+                self.current_settings['color'] = initial_color
+        
+        color = QColorDialog.getColor(initial_color, self, "选择颜色")
         if color.isValid():
             self.current_settings['color'] = color
             self.update_color_button()
