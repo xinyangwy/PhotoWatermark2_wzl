@@ -422,6 +422,20 @@ class PhotoMarkApp(QMainWindow):
         """水印设置改变"""
         if self.current_image_path:
             self.preview_watermark()
+            
+        # 检查是否需要应用到所有图片
+        current_tab = self.settings_tabs.currentIndex()
+        if current_tab == 0:  # 文本水印
+            settings = self.text_watermark_panel.get_settings()
+            if settings.get('apply_to_all', False) and self.image_paths:
+                # 这里不需要立即处理所有图片，只需要将设置保存
+                # 实际的批量处理将在用户点击批量处理按钮时进行
+                pass
+        elif current_tab == 1:  # 图片水印
+            settings = self.image_watermark_panel.get_settings()
+            if settings.get('apply_to_all', False) and self.image_paths:
+                # 同样，这里只需要保存设置
+                pass
     
     @pyqtSlot(QPoint)
     def on_watermark_position_changed(self, position: QPoint):
@@ -634,6 +648,11 @@ class PhotoMarkApp(QMainWindow):
         else:
             QMessageBox.warning(self, "批量处理", "请先配置水印设置")
             return
+        
+        # 检查是否需要应用到所有图片的设置（虽然在批量处理中这是默认行为，但我们保留这个检查以保持一致性）
+        if settings.get('apply_to_all', False):
+            # 记录日志，表明正在使用应用到所有图片的设置
+            logger.info(f"开始批量处理 {len(image_paths)} 张图片，使用应用到所有图片的设置")
         
         # 设置进度条
         self.image_list_panel.set_progress_visible(True)

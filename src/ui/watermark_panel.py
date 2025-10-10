@@ -41,7 +41,8 @@ class WatermarkPanel(QWidget):
                 'rotation': 0,
                 'background': False,
                 'bg_color': QColor(0, 0, 0),
-                'bg_opacity': 50
+                'bg_opacity': 50,
+                'apply_to_all': False
             },
             'image': {
                 'watermark_path': '',
@@ -51,7 +52,8 @@ class WatermarkPanel(QWidget):
                 'margin': 20,
                 'rotation': 0,
                 'tile_mode': False,
-                'tile_spacing': 50
+                'tile_spacing': 50,
+                'apply_to_all': False
             }
         }
         
@@ -112,6 +114,17 @@ class WatermarkPanel(QWidget):
             
         # 添加位置和样式设置
         self.create_position_style_ui(layout)
+        
+        # 添加应用范围设置
+        apply_scope_group = QGroupBox("应用范围")
+        apply_scope_layout = QVBoxLayout(apply_scope_group)
+        
+        self.apply_to_all_check = QCheckBox("是否应用到全部图片")
+        self.apply_to_all_check.setChecked(self.current_settings['apply_to_all'])
+        self.apply_to_all_check.toggled.connect(self.on_apply_to_all_toggled)
+        apply_scope_layout.addWidget(self.apply_to_all_check)
+        
+        layout.addWidget(apply_scope_group)
         
         # 添加分隔线
         separator = QFrame()
@@ -460,6 +473,12 @@ class WatermarkPanel(QWidget):
         export_layout.addRow("", format_layout)
         
         layout.addWidget(export_group)
+        
+    # 应用范围相关方法
+    def on_apply_to_all_toggled(self, checked):
+        """应用到全部图片选项切换"""
+        self.current_settings['apply_to_all'] = checked
+        self.settings_changed.emit()
         
     # 文本水印相关方法
     def on_text_changed(self, text):
