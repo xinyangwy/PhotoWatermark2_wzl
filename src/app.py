@@ -649,10 +649,14 @@ class PhotoMarkApp(QMainWindow):
             QMessageBox.warning(self, "批量处理", "请先配置水印设置")
             return
         
-        # 检查是否需要应用到所有图片的设置（虽然在批量处理中这是默认行为，但我们保留这个检查以保持一致性）
-        if settings.get('apply_to_all', False):
-            # 记录日志，表明正在使用应用到所有图片的设置
-            logger.info(f"开始批量处理 {len(image_paths)} 张图片，使用应用到所有图片的设置")
+        # 检查是否需要应用到所有图片的设置
+        # 根据需求，批量处理只有在用户明确勾选"应用到全部图片"时才进行
+        if not settings.get('apply_to_all', False):
+            QMessageBox.information(self, "批量处理", "请先勾选'是否应用到全部图片'选项")
+            return
+        
+        # 记录日志，表明正在使用应用到所有图片的设置
+        logger.info(f"开始批量处理 {len(image_paths)} 张图片，使用应用到所有图片的设置")
         
         # 设置进度条
         self.image_list_panel.set_progress_visible(True)
