@@ -257,8 +257,8 @@ class PreviewPanel(QWidget):
         self.watermark_size = QPoint(100, 50)  # 水印大小
         self.original_pixmap = None
         self.watermarked_pixmap = None
-        self.zoom_factor = 1.0  # 缩放系数，默认为100%
-        self.zoom_levels = [1.0, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0]  # 预设缩放级别（仅保留100%及以上）
+        self.zoom_factor = 1.0  # 缩放系数，默认为100%且固定不变
+        self.zoom_levels = [1.0]  # 仅保留100%缩放级别，固定不允许调整
         self._is_dragging = False
         self.init_ui()
     
@@ -283,39 +283,12 @@ class PreviewPanel(QWidget):
         # 添加水印预览区域
         layout.addWidget(self.watermarked_scroll)
         
-        # 缩放控制区域
-        zoom_layout = QHBoxLayout()
-        
-        # 缩放标签
-        zoom_label = QLabel("缩放:")
-        zoom_layout.addWidget(zoom_label)
-        
-        # 缩放滑块
-        self.zoom_slider = QSlider(Qt.Orientation.Horizontal)
-        self.zoom_slider.setRange(0, len(self.zoom_levels) - 1)
-        self.zoom_slider.setValue(0)  # 默认100%
-        self.zoom_slider.setMinimumWidth(150)
-        self.zoom_slider.valueChanged.connect(self.on_zoom_slider_changed)
-        zoom_layout.addWidget(self.zoom_slider)
-        
-        # 缩放百分比显示
-        self.zoom_percent_label = QLabel("100%")
-        self.zoom_percent_label.setMinimumWidth(50)
-        self.zoom_percent_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        zoom_layout.addWidget(self.zoom_percent_label)
-        
-        # 缩放下拉框
-        self.zoom_combo = QComboBox()
-        for level in self.zoom_levels:
-            self.zoom_combo.addItem(f"{int(level * 100)}%")
-        self.zoom_combo.setCurrentIndex(0)  # 默认100%
-        self.zoom_combo.currentIndexChanged.connect(self.on_zoom_combo_changed)
-        zoom_layout.addWidget(self.zoom_combo)
-        
-        # 添加填充
-        zoom_layout.addStretch()
-        
-        layout.addLayout(zoom_layout)
+        # 缩放显示（固定为100%，不允许调整）
+        zoom_info_layout = QHBoxLayout()
+        zoom_info_label = QLabel("缩放: 100%")
+        zoom_info_layout.addWidget(zoom_info_label)
+        zoom_info_layout.addStretch()
+        layout.addLayout(zoom_info_layout)
         
         # 信息显示区域
         self.info_label = QLabel("请选择一张图片开始预览")
@@ -472,18 +445,12 @@ class PreviewPanel(QWidget):
         return self.watermark_size
         
     def on_zoom_slider_changed(self, index):
-        """缩放滑块变化处理"""
-        if 0 <= index < len(self.zoom_levels):
-            self.zoom_factor = self.zoom_levels[index]
-            self.zoom_combo.setCurrentIndex(index)
-            self.update_zoom_display()
-            
+        """缩放滑块变化处理 - 现在已禁用缩放功能"""
+        pass
+        
     def on_zoom_combo_changed(self, index):
-        """缩放下拉框变化处理"""
-        if 0 <= index < len(self.zoom_levels):
-            self.zoom_factor = self.zoom_levels[index]
-            self.zoom_slider.setValue(index)
-            self.update_zoom_display()
+        """缩放下拉框变化处理 - 现在已禁用缩放功能"""
+        pass
             
     def update_zoom_display(self):
         """更新缩放显示 - 优化版，减少计算和提升性能"""
@@ -509,63 +476,34 @@ class PreviewPanel(QWidget):
                 # 获取预览区域的实际可用尺寸
                 scroll_area_size = self.watermarked_scroll.viewport().size()
                 
-                # 只在缩放比例变化显著时才重新缩放图片
-                if not hasattr(self, '_last_zoom_factor') or abs(self.zoom_factor - self._last_zoom_factor) > 0.05:
-                    # 计算自适应缩放比例，确保图片完整显示
-                    if self.zoom_factor == 1.0:
-                        # 当缩放为100%时，检查图片是否超出预览区域
-                        pixmap_size = self.watermarked_pixmap.size()
-                        
-                        # 如果图片尺寸大于预览区域，则自动缩小以完整显示
-                        if pixmap_size.width() > scroll_area_size.width() or pixmap_size.height() > scroll_area_size.height():
-                            # 计算合适的缩放比例
-                            width_ratio = scroll_area_size.width() / pixmap_size.width()
-                            height_ratio = scroll_area_size.height() / pixmap_size.height()
-                            adaptive_ratio = min(width_ratio, height_ratio)
-                            
-                            # 使用自适应缩放
-                            scaled_width = int(pixmap_size.width() * adaptive_ratio)
-                            scaled_height = int(pixmap_size.height() * adaptive_ratio)
-                            
-                            # 拖拽时使用更快的变换模式
-                            transform_mode = Qt.TransformationMode.FastTransformation if hasattr(self, '_is_dragging') and self._is_dragging else Qt.TransformationMode.SmoothTransformation
-                            scaled_pixmap = self.watermarked_pixmap.scaled(
-                                scaled_width, scaled_height,
-                                Qt.AspectRatioMode.KeepAspectRatio,
-                                transform_mode
-                            )
-                            self.watermarked_label.setPixmap(scaled_pixmap)
-                        else:
-                            # 图片尺寸合适，直接显示原始图片
-                            self.watermarked_label.setPixmap(self.watermarked_pixmap)
-                    else:
-                        # 对于其他缩放级别，使用缩放后的图片
-                        # 确保缩放因子<1.0时图片缩小，>1.0时图片放大
-                        scaled_width = int(self.watermarked_pixmap.width() * self.zoom_factor)
-                        scaled_height = int(self.watermarked_pixmap.height() * self.zoom_factor)
-                        
-                        # 确保缩放后的尺寸不为0或负数
-                        scaled_width = max(1, scaled_width)
-                        scaled_height = max(1, scaled_height)
-                        
-                        # 拖拽时使用更快的变换模式
-                        transform_mode = Qt.TransformationMode.FastTransformation if hasattr(self, '_is_dragging') and self._is_dragging else Qt.TransformationMode.SmoothTransformation
-                        scaled_pixmap = self.watermarked_pixmap.scaled(
-                            scaled_width, scaled_height,
-                            Qt.AspectRatioMode.KeepAspectRatio,
-                            transform_mode
-                        )
-                        
-                        # 更新显示
-                        self.watermarked_label.setPixmap(scaled_pixmap)
+                    # 固定使用100%缩放（但保持自动适应窗口大小的功能）
+                # 获取图片尺寸
+                pixmap_size = self.watermarked_pixmap.size()
+                
+                # 如果图片尺寸大于预览区域，则自动缩小以完整显示
+                if pixmap_size.width() > scroll_area_size.width() or pixmap_size.height() > scroll_area_size.height():
+                    # 计算合适的缩放比例
+                    width_ratio = scroll_area_size.width() / pixmap_size.width()
+                    height_ratio = scroll_area_size.height() / pixmap_size.height()
+                    adaptive_ratio = min(width_ratio, height_ratio)
                     
-                    self._last_zoom_factor = self.zoom_factor
+                    # 使用自适应缩放
+                    scaled_width = int(pixmap_size.width() * adaptive_ratio)
+                    scaled_height = int(pixmap_size.height() * adaptive_ratio)
+                    
+                    # 拖拽时使用更快的变换模式
+                    transform_mode = Qt.TransformationMode.FastTransformation if hasattr(self, '_is_dragging') and self._is_dragging else Qt.TransformationMode.SmoothTransformation
+                    scaled_pixmap = self.watermarked_pixmap.scaled(
+                        scaled_width, scaled_height,
+                        Qt.AspectRatioMode.KeepAspectRatio,
+                        transform_mode
+                    )
+                    self.watermarked_label.setPixmap(scaled_pixmap)
+                else:
+                    # 图片尺寸合适，直接显示原始图片
+                    self.watermarked_label.setPixmap(self.watermarked_pixmap)
                 
                 self.watermarked_label.setText("")
-                
-                # 更新百分比标签
-                percent = int(self.zoom_factor * 100)
-                self.zoom_percent_label.setText(f"{percent}%")
                 
                 # 高效更新水印大小和位置以适应缩放
                 # 只在必要时才更新水印大小
@@ -612,33 +550,7 @@ class PreviewPanel(QWidget):
         self.update_zoom_display()
 
     def ensure_image_fully_visible(self):
-        """确保图片能够完整显示在预览窗口中"""
+        """确保图片能够完整显示在预览窗口中 - 固定使用100%缩放"""
         if self.watermarked_pixmap and not self.watermarked_pixmap.isNull():
-            # 获取预览区域的实际可用尺寸
-            scroll_area_size = self.watermarked_scroll.viewport().size()
-            pixmap_size = self.watermarked_pixmap.size()
-            
-            # 如果图片尺寸大于预览区域，自动调整缩放级别
-            if pixmap_size.width() > scroll_area_size.width() or pixmap_size.height() > scroll_area_size.height():
-                # 计算合适的缩放比例
-                width_ratio = scroll_area_size.width() / pixmap_size.width()
-                height_ratio = scroll_area_size.height() / pixmap_size.height()
-                adaptive_ratio = min(width_ratio, height_ratio)
-                
-                # 找到最接近的自适应缩放级别
-                best_zoom_index = 0  # 默认100%
-                best_zoom_diff = float('inf')
-                
-                for i, level in enumerate(self.zoom_levels):
-                    diff = abs(level - adaptive_ratio)
-                    if diff < best_zoom_diff:
-                        best_zoom_diff = diff
-                        best_zoom_index = i
-                
-                # 应用自适应缩放级别
-                self.zoom_factor = self.zoom_levels[best_zoom_index]
-                self.zoom_slider.setValue(best_zoom_index)
-                self.zoom_combo.setCurrentIndex(best_zoom_index)
-                
-                # 更新显示
-                self.update_zoom_display()
+            # 直接调用update_zoom_display来确保图片正确显示（会自动适应窗口大小）
+            self.update_zoom_display()
