@@ -1,0 +1,14 @@
+{
+    "text_watermark": {
+        "text": "PhotoMark23",
+        "font": "Arial",
+        "size": 100,
+        "bold": false,
+        "italic": false,
+        "color": "#FFFFFF",
+        "opacity": 100,
+        "position": "top_left",
+        "margin": 20,
+        "rotation": 0,
+        "background": false,
+        "bg_color": 

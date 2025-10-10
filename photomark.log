@@ -504,3 +504,334 @@ TypeError: ImageListPanel.image_selected[str].emit(): argument 1 has unexpected 
 2025-10-02 22:36:47,658 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
 2025-10-02 22:36:48,766 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
 2025-10-02 22:36:49,783 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-02 22:39:11,398 - __main__ - INFO - 应用程序正常退出
+2025-10-09 10:48:03,950 - __main__ - INFO - 应用程序启动成功
+2025-10-09 10:48:49,562 - __main__ - CRITICAL - 未捕获的异常:
+Traceback (most recent call last):
+  File "D:\Code\GitHub\PhotoWatermark2_wzl\src\ui\image_list_panel.py", line 33, in dragEnterEvent
+    has_images = any(self.is_image_file(url.toLocalFile()) for url in urls)
+  File "D:\Code\GitHub\PhotoWatermark2_wzl\src\ui\image_list_panel.py", line 33, in <genexpr>
+    has_images = any(self.is_image_file(url.toLocalFile()) for url in urls)
+                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "D:\Code\GitHub\PhotoWatermark2_wzl\src\ui\image_list_panel.py", line 71, in is_image_file
+    return any(filename.lower().endswith(ext) for ext in valid_extensions)
+  File "D:\Code\GitHub\PhotoWatermark2_wzl\src\ui\image_list_panel.py", line 71, in <genexpr>
+    return any(filename.lower().endswith(ext) for ext in valid_extensions)
+               ^^^^^^^^
+NameError: name 'filename' is not defined
+
+2025-10-09 10:48:57,005 - __main__ - INFO - 应用程序正常退出
+2025-10-09 10:50:37,379 - __main__ - INFO - 应用程序启动成功
+2025-10-09 10:50:44,617 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 10:50:44,652 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 10:50:59,573 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 10:51:02,615 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 10:51:04,027 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 10:51:04,915 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 10:51:26,384 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 10:51:28,226 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 10:51:36,365 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 10:51:36,760 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 10:51:37,108 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 10:51:39,730 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 10:51:39,958 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 10:51:40,180 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 10:56:12,600 - __main__ - INFO - 应用程序正常退出
+2025-10-09 10:57:29,677 - __main__ - CRITICAL - 应用程序启动失败: type object 'QWidget' has no attribute 'SizePolicy'
+2025-10-09 10:58:23,199 - __main__ - CRITICAL - 应用程序启动失败: type object 'QSizePolicy' has no attribute 'Expanding'
+2025-10-09 11:01:02,494 - __main__ - INFO - 应用程序启动成功
+2025-10-09 11:01:12,665 - __main__ - INFO - 应用程序正常退出
+2025-10-09 11:01:32,095 - __main__ - INFO - 应用程序启动成功
+2025-10-09 11:02:06,955 - src.core.watermark_processor - ERROR - 水印图片文件不存在: 
+2025-10-09 11:02:07,036 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 11:02:13,652 - src.core.watermark_processor - ERROR - 水印图片文件不存在: 
+2025-10-09 11:02:26,849 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:02:31,558 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:02:33,659 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:02:36,248 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:02:38,444 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:03:30,022 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 11:03:31,745 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/run.jpg
+2025-10-09 11:03:32,959 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 11:03:33,726 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/run.jpg
+2025-10-09 11:03:50,196 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:03:50,660 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 11:03:51,151 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/run.jpg
+2025-10-09 11:04:47,240 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:04:47,263 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 11:04:51,246 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 11:04:59,224 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:05:00,209 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 11:05:02,468 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:05:24,048 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:05:25,859 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:05:26,078 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:05:27,574 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:05:27,791 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:05:27,993 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:09:55,141 - __main__ - CRITICAL - 未捕获的异常:
+Traceback (most recent call last):
+  File "D:\Code\GitHub\PhotoWatermark2_wzl\src\ui\watermark_panel.py", line 443, in select_color
+    color = QColorDialog.getColor(self.current_settings['color'], self, "选择颜色")
+            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: getColor(initial: Union[QColor, Qt.GlobalColor, int] = Qt.white, parent: Optional[QWidget] = None, title: Optional[str] = '', options: QColorDialog.ColorDialogOption = QColorDialog.ColorDialogOptions()): argument 1 has unexpected type 'str'
+
+2025-10-09 11:09:58,777 - __main__ - INFO - 应用程序正常退出
+2025-10-09 11:12:57,547 - __main__ - INFO - 应用程序启动成功
+2025-10-09 11:22:44,645 - __main__ - INFO - 应用程序正常退出
+2025-10-09 11:23:29,262 - __main__ - INFO - 应用程序启动成功
+2025-10-09 11:23:39,448 - __main__ - INFO - 应用程序正常退出
+2025-10-09 11:23:57,689 - __main__ - INFO - 应用程序启动成功
+2025-10-09 11:26:43,105 - __main__ - INFO - 应用程序启动成功
+2025-10-09 11:28:18,775 - __main__ - INFO - 应用程序正常退出
+2025-10-09 11:28:19,744 - __main__ - INFO - 应用程序正常退出
+2025-10-09 11:28:24,052 - __main__ - INFO - 应用程序启动成功
+2025-10-09 11:29:33,418 - __main__ - INFO - 应用程序启动成功
+2025-10-09 11:32:49,761 - __main__ - INFO - 应用程序正常退出
+2025-10-09 11:32:53,612 - __main__ - INFO - 应用程序正常退出
+2025-10-09 11:33:22,623 - __main__ - INFO - 应用程序启动成功
+2025-10-09 11:34:43,255 - __main__ - INFO - 应用程序正常退出
+2025-10-09 11:35:34,703 - __main__ - INFO - 应用程序启动成功
+2025-10-09 11:38:11,379 - __main__ - INFO - 应用程序正常退出
+2025-10-09 11:38:44,655 - __main__ - INFO - 应用程序启动成功
+2025-10-09 11:38:53,303 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:38:53,350 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 11:38:54,033 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 11:38:57,383 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:39:05,794 - src.core.watermark_processor - ERROR - 水印图片文件不存在: 
+2025-10-09 11:39:08,605 - src.core.watermark_processor - ERROR - 水印图片文件不存在: 
+2025-10-09 11:39:11,302 - src.core.watermark_processor - ERROR - 水印图片文件不存在: 
+2025-10-09 11:39:18,016 - src.core.watermark_processor - ERROR - 水印图片文件不存在: 
+2025-10-09 11:39:30,996 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:52:45,608 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 11:52:47,679 - __main__ - INFO - 应用程序正常退出
+2025-10-09 11:52:52,715 - __main__ - INFO - 应用程序启动成功
+2025-10-09 11:52:59,147 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:52:59,196 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 11:52:59,919 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 11:53:01,699 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:53:04,009 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 11:53:04,540 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 11:53:05,035 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/run.jpg
+2025-10-09 11:53:05,480 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/run.jpg
+2025-10-09 11:53:08,717 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:53:09,342 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:53:28,613 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 11:53:29,083 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:53:32,687 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:53:32,939 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:53:37,230 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 11:56:22,057 - __main__ - INFO - 应用程序启动成功
+2025-10-09 11:57:40,894 - __main__ - INFO - 应用程序启动成功
+2025-10-09 11:57:44,277 - __main__ - INFO - 应用程序正常退出
+2025-10-09 11:57:51,663 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 11:57:51,686 - src.ui.preview_panel - ERROR - 水印生成错误: 'QPoint' object has no attribute 'width'
+2025-10-09 11:57:51,702 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 11:57:52,926 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 11:57:52,950 - src.ui.preview_panel - ERROR - 水印生成错误: 'QPoint' object has no attribute 'width'
+2025-10-09 11:59:50,334 - __main__ - INFO - 应用程序启动成功
+2025-10-09 14:09:20,931 - __main__ - INFO - 应用程序启动成功
+2025-10-09 14:09:22,344 - __main__ - INFO - 应用程序正常退出
+2025-10-09 14:09:44,192 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:09:44,229 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 14:09:56,822 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:10:06,477 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:10:09,377 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:13:16,976 - __main__ - INFO - 应用程序启动成功
+2025-10-09 14:13:29,543 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/run.jpg
+2025-10-09 14:13:29,602 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 14:13:32,750 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:13:35,891 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:13:47,367 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:13:50,976 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:19:26,486 - __main__ - INFO - 应用程序启动成功
+2025-10-09 14:20:34,323 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:20:34,360 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 14:20:36,896 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:20:38,033 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:20:38,844 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:20:40,558 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:20:44,282 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:20:52,296 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:20:54,469 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:01,519 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:01,753 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:01,971 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:02,182 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:02,422 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:02,650 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:02,861 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:03,135 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:03,442 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:03,707 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:04,153 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:04,359 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:48,351 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:48,687 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:48,888 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:49,118 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:49,542 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:52,393 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:52,692 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:53,085 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:21:53,309 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:22:56,926 - __main__ - INFO - 应用程序正常退出
+2025-10-09 14:26:35,994 - __main__ - INFO - 应用程序启动成功
+2025-10-09 14:26:45,858 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 14:26:45,914 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 14:26:47,014 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:26:57,756 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:01,664 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:02,694 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:17,358 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:19,903 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:20,278 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:21,239 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:25,841 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:26,718 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:29,852 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:31,170 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:32,216 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:34,599 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:35,953 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:37,166 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:37,576 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:38,867 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:45,582 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:45,856 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:46,152 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:46,376 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:46,687 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:46,905 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:47,128 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:47,426 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:47,655 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:47,855 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:48,141 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:48,374 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:48,634 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:48,872 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:49,088 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:49,357 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:49,627 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:49,923 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:50,178 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:27:50,492 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:28:12,370 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:36:58,675 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 14:37:00,724 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 15:01:09,279 - __main__ - INFO - 应用程序正常退出
+2025-10-09 15:01:14,140 - __main__ - INFO - 应用程序启动成功
+2025-10-09 15:01:25,244 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:25,281 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 15:01:29,683 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:31,245 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:33,762 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:34,000 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:34,204 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:34,406 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:34,673 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:34,884 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:35,104 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:35,320 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:35,834 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:36,345 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:36,554 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:36,902 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:37,167 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:37,437 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:37,688 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:38,026 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:45,119 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:45,391 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:45,607 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:46,342 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:46,595 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:46,880 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:47,386 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:47,634 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:47,875 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:48,102 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:48,423 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:48,775 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:49,020 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:50,339 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:50,697 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:51,030 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:52,324 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:53,631 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:56,131 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:57,020 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:57,294 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:57,692 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:59,137 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:01:59,467 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:02:00,680 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:02:20,611 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:02:23,042 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:02:23,320 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:02:23,604 - src.core.watermark_processor - INFO - 成功添加图片水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:11:18,152 - __main__ - INFO - 应用程序正常退出
+2025-10-09 15:11:23,081 - __main__ - INFO - 应用程序启动成功
+2025-10-09 15:11:30,402 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:11:30,424 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 15:11:32,729 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 15:11:33,219 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:11:34,945 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 15:11:36,552 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:11:37,202 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 15:11:37,548 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/run.jpg
+2025-10-09 15:11:37,986 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/run.jpg
+2025-10-09 15:11:38,634 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 15:11:39,362 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:14:02,420 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 15:14:03,013 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:14:06,227 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/run.jpg
+2025-10-09 15:14:06,627 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/run.jpg
+2025-10-09 15:14:07,218 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 15:14:11,173 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 15:14:12,776 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 15:14:47,788 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/run.jpg
+2025-10-09 15:14:48,459 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:14:56,302 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:14:56,595 - __main__ - INFO - 应用程序正常退出
+2025-10-09 15:15:01,703 - __main__ - INFO - 应用程序启动成功
+2025-10-09 15:15:08,898 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 15:15:08,925 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 15:15:10,607 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/run.jpg
+2025-10-09 15:15:11,258 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/flower.jpg
+2025-10-09 15:15:11,921 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/run.jpg
+2025-10-09 15:15:12,537 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 15:16:12,734 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/run.jpg
+2025-10-09 15:16:13,530 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 15:16:14,132 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 15:16:15,941 - src.core.watermark_processor - INFO - 成功添加文本水印到: D:/Code/GitHub/PhotoWatermark2_wzl/images/huawei.jpg
+2025-10-09 15:16:19,584 - src.core.watermark_processor - ERROR - 水印图片文件不存在: 
+2025-10-09 15:16:22,589 - src.core.watermark_processor - ERROR - 水印图片文件不存在: 
+2025-10-09 15:19:48,754 - __main__ - INFO - 应用程序正常退出
+2025-10-09 15:19:53,169 - __main__ - INFO - 应用程序启动成功
+2025-10-09 15:19:59,555 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 15:20:29,532 - src.core.watermark_processor - ERROR - 水印图片文件不存在: 
+2025-10-09 15:20:31,673 - src.core.watermark_processor - ERROR - 水印图片文件不存在: 
+2025-10-09 15:23:35,425 - __main__ - INFO - 应用程序正常退出
+2025-10-09 15:23:39,136 - __main__ - INFO - 应用程序启动成功
+2025-10-09 15:23:55,711 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 15:27:03,873 - __main__ - INFO - 应用程序正常退出
+2025-10-09 15:29:50,406 - __main__ - INFO - 应用程序启动成功
+2025-10-09 15:30:00,028 - __main__ - INFO - 应用程序正常退出
+2025-10-09 15:31:15,779 - __main__ - INFO - 应用程序启动成功
+2025-10-09 15:31:22,258 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 15:33:23,706 - __main__ - INFO - 应用程序正常退出
+2025-10-09 15:33:27,979 - __main__ - INFO - 应用程序启动成功
+2025-10-09 15:33:36,488 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-09 15:45:04,512 - __main__ - INFO - 应用程序启动成功
+2025-10-09 15:45:29,876 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-10 10:17:00,521 - __main__ - INFO - 应用程序启动成功
+2025-10-10 10:30:32,810 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-10 10:43:49,861 - __main__ - INFO - 应用程序正常退出
+2025-10-10 10:44:00,276 - __main__ - INFO - 应用程序启动成功
+2025-10-10 10:44:05,996 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-10 10:48:30,171 - __main__ - INFO - 应用程序正常退出
+2025-10-10 10:48:34,607 - __main__ - INFO - 应用程序启动成功
+2025-10-10 10:48:41,885 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-10 10:52:35,918 - __main__ - INFO - 应用程序正常退出

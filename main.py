@@ -12,6 +12,18 @@ import traceback
 import logging
 from PyQt6.QtWidgets import QApplication, QMessageBox
 
+# 解决Windows控制台中文显示问题
+if sys.platform.startswith('win'):
+    try:
+        # 设置标准输出编码为UTF-8
+        sys.stdout.reconfigure(encoding='utf-8')
+    except AttributeError:
+        # Python 3.6及以下版本兼容性处理
+        import io
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    except Exception:
+        pass
+
 # 配置日志
 logging.basicConfig(
     level=logging.INFO,

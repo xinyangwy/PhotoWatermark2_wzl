@@ -8,10 +8,14 @@
 
 import os
 import logging
+import warnings
 from typing import Optional, Tuple, Dict, Any
 from PyQt6.QtGui import QImage, QPixmap, QPainter, QFont, QColor, QPen, QBrush
 from PyQt6.QtCore import Qt, QRect, QPoint, QSize
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance
+
+# 忽略libpng警告
+warnings.filterwarnings("ignore", category=UserWarning, message="iCCP: known incorrect sRGB profile")
 
 logger = logging.getLogger(__name__)
 
@@ -42,6 +46,7 @@ class WatermarkProcessor:
                 - background: 背景颜色 (可选)
                 - background_opacity: 背景透明度 0-100 (默认: 50)
                 - padding/margin: 内边距 (默认: 10)
+                - log_level: 日志级别 ('info', 'debug', 'silent')，默认 'info'
                 
         Returns:
             QPixmap: 添加水印后的图片，失败返回None
@@ -137,7 +142,14 @@ class WatermarkProcessor:
             
             painter.end()
             
-            logger.info(f"成功添加文本水印到: {image_path}")
+            # 根据设置控制日志输出
+            log_level = settings.get('log_level', 'info')
+            if log_level == 'info':
+                logger.info(f"成功添加文本水印到: {image_path}")
+            elif log_level == 'debug':
+                logger.debug(f"成功添加文本水印到: {image_path}")
+            # 'silent' 模式不记录日志
+            
             return QPixmap.fromImage(image)
             
         except Exception as e:
@@ -159,6 +171,7 @@ class WatermarkProcessor:
                 - rotation: 旋转角度 -360到360 (默认: 0)
                 - tiling/tile_mode: 是否平铺 (默认: False)
                 - tiling_spacing/tile_spacing: 平铺间距 (默认: 50)
+                - log_level: 日志级别 ('info', 'debug', 'silent')，默认 'info'
                 
         Returns:
             QPixmap: 添加水印后的图片，失败返回None
@@ -169,6 +182,9 @@ class WatermarkProcessor:
                 logger.error(f"原图片文件不存在: {image_path}")
                 return None
                 
+            if not watermark_path:
+                logger.error("水印图片文件不存在: 未指定水印图片路径")
+                return None
             if not os.path.exists(watermark_path):
                 logger.error(f"水印图片文件不存在: {watermark_path}")
                 return None
@@ -231,7 +247,14 @@ class WatermarkProcessor:
             
             painter.end()
             
-            logger.info(f"成功添加图片水印到: {image_path}")
+            # 根据设置控制日志输出
+            log_level = settings.get('log_level', 'info')
+            if log_level == 'info':
+                logger.info(f"成功添加图片水印到: {image_path}")
+            elif log_level == 'debug':
+                logger.debug(f"成功添加图片水印到: {image_path}")
+            # 'silent' 模式不记录日志
+            
             return QPixmap.fromImage(image)
             
         except Exception as e:

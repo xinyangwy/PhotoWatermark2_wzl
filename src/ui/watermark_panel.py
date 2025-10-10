@@ -624,10 +624,6 @@ class WatermarkPanel(QWidget):
     
     def update_position_from_drag(self, x: int, y: int):
         """从拖拽操作更新位置设置"""
-        # 将拖拽位置转换为相对位置描述
-        # 这里我们简单地将拖拽位置保存为自定义位置
-        # 在实际应用中，可能需要更复杂的逻辑来将绝对坐标转换为相对位置
-        
         # 设置位置为自定义模式，并保存坐标
         self.current_settings['position'] = 'custom'
         self.current_settings['custom_x'] = x
@@ -641,8 +637,11 @@ class WatermarkPanel(QWidget):
         for pos, btn in self.position_buttons.items():
             btn.setChecked(pos == 'custom')
             
-        # 更新位置输入框（如果存在）
-        if hasattr(self, 'position_x_spin') and hasattr(self, 'position_y_spin'):
+        # 如果没有位置输入框，创建它们
+        if not hasattr(self, 'position_x_spin') or not hasattr(self, 'position_y_spin'):
+            self.create_position_inputs()
+        else:
+            # 更新位置输入框
             self.position_x_spin.blockSignals(True)
             self.position_y_spin.blockSignals(True)
             self.position_x_spin.setValue(x)
@@ -651,6 +650,69 @@ class WatermarkPanel(QWidget):
             self.position_y_spin.blockSignals(False)
         
         # 发送设置变更信号，触发实时预览
+        self.settings_changed.emit()
+        
+    def create_position_inputs(self):
+        """创建自定义位置输入框"""
+        # 查找位置设置组
+        for child in self.findChildren(QGroupBox):
+            if child.title() == "位置设置":
+                position_group = child
+                break
+        else:
+            return
+        
+        # 查找布局
+        position_layout = position_group.layout()
+        if not position_layout:
+            return
+        
+        # 检查是否已经存在自定义位置输入框
+        if hasattr(self, 'position_x_spin'):
+            return
+        
+        # 创建位置输入框布局
+        pos_input_layout = QHBoxLayout()
+        pos_input_layout.addWidget(QLabel("X坐标:"))
+        
+        self.position_x_spin = QSpinBox()
+        self.position_x_spin.setRange(0, 9999)
+        self.position_x_spin.setValue(self.current_settings.get('custom_x', 0))
+        self.position_x_spin.setMinimumWidth(60)
+        self.position_x_spin.valueChanged.connect(self.on_custom_x_changed)
+        pos_input_layout.addWidget(self.position_x_spin)
+        
+        pos_input_layout.addWidget(QLabel("Y坐标:"))
+        
+        self.position_y_spin = QSpinBox()
+        self.position_y_spin.setRange(0, 9999)
+        self.position_y_spin.setValue(self.current_settings.get('custom_y', 0))
+        self.position_y_spin.setMinimumWidth(60)
+        self.position_y_spin.valueChanged.connect(self.on_custom_y_changed)
+        pos_input_layout.addWidget(self.position_y_spin)
+        
+        pos_input_layout.addStretch()
+        
+        # 在位置设置组底部添加输入框
+        # 找到自定义位置按钮的位置
+        custom_btn = self.position_buttons.get('custom')
+        if custom_btn:
+            # 获取按钮的行号
+            index = position_layout.indexOf(custom_btn)
+            row, col, row_span, col_span = position_layout.getItemPosition(index)
+            # 在按钮下方添加输入框
+            position_layout.addLayout(pos_input_layout, row + 1, 0, 1, 3)
+    
+    def on_custom_x_changed(self, value):
+        """自定义X坐标改变"""
+        self.current_settings['custom_x'] = value
+        self.current_settings['x'] = value
+        self.settings_changed.emit()
+        
+    def on_custom_y_changed(self, value):
+        """自定义Y坐标改变"""
+        self.current_settings['custom_y'] = value
+        self.current_settings['y'] = value
         self.settings_changed.emit()
     
     # 预设水印相关方法

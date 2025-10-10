@@ -109,6 +109,10 @@ class BatchProcessThread(QThread):
             results = {}
             total = len(self.image_paths)
             
+            # 创建一个settings副本并添加日志级别设置
+            settings_copy = self.settings.copy()
+            settings_copy['log_level'] = 'debug'  # 批量处理时使用debug级别日志
+            
             for i, image_path in enumerate(self.image_paths):
                 if not self._is_running:
                     break
@@ -119,10 +123,10 @@ class BatchProcessThread(QThread):
                 try:
                     if self.watermark_type == 'text':
                         result_pixmap = self.processor.add_text_watermark(
-                            image_path, self.settings.get('text', ''), self.settings)
+                            image_path, settings_copy.get('text', ''), settings_copy)
                     else:
                         result_pixmap = self.processor.add_image_watermark(
-                            image_path, self.settings.get('watermark_path', ''), self.settings)
+                            image_path, settings_copy.get('watermark_path', ''), settings_copy)
                     
                     if result_pixmap and not result_pixmap.isNull():
                         output_filename = f"{os.path.splitext(filename)[0]}_watermarked{os.path.splitext(filename)[1]}"
@@ -551,12 +555,20 @@ class PhotoMarkApp(QMainWindow):
         try:
             if current_tab == 0:  # 文本水印
                 settings = self.text_watermark_panel.get_settings()
+                # 预览模式下设置较低的日志级别，避免过多日志
+                settings['log_level'] = 'debug'
                 result_pixmap = self.watermark_processor.add_text_watermark(
                     self.current_image_path, settings.get('text', ''), settings)
             elif current_tab == 1:  # 图片水印
                 settings = self.image_watermark_panel.get_settings()
+                watermark_path = settings.get('watermark_path', '')
+                if not watermark_path or not os.path.exists(watermark_path):
+                    QMessageBox.warning(self, "预览失败", "请先选择有效的水印图片")
+                    return
+                # 预览模式下设置较低的日志级别，避免过多日志
+                settings['log_level'] = 'debug'
                 result_pixmap = self.watermark_processor.add_image_watermark(
-                    self.current_image_path, settings.get('watermark_path', ''), settings)
+                    self.current_image_path, watermark_path, settings)
             else:
                 return
             
@@ -614,6 +626,10 @@ class PhotoMarkApp(QMainWindow):
             watermark_type = 'text'
         elif current_tab == 1:  # 图片水印
             settings = self.image_watermark_panel.get_settings()
+            watermark_path = settings.get('watermark_path', '')
+            if not watermark_path or not os.path.exists(watermark_path):
+                QMessageBox.warning(self, "批量处理", "请先选择有效的水印图片")
+                return
             watermark_type = 'image'
         else:
             QMessageBox.warning(self, "批量处理", "请先配置水印设置")
