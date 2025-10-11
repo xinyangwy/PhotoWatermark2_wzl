@@ -36,7 +36,7 @@ class WatermarkPanel(QWidget):
                 'italic': False,
                 'color': QColor(255, 255, 255),
                 'opacity': 80,
-                'position': 'bottom_right',
+                'position': 'top_left',
                 'margin': 20,
                 'rotation': 0,
                 'background': False,
@@ -48,7 +48,7 @@ class WatermarkPanel(QWidget):
                 'watermark_path': '',
                 'scale': 30,
                 'opacity': 80,
-                'position': 'bottom_right',
+                'position': 'top_left',
                 'margin': 20,
                 'rotation': 0,
                 'tile_mode': False,
@@ -59,8 +59,6 @@ class WatermarkPanel(QWidget):
         
         self.current_settings = self.default_settings[self.watermark_type].copy()
         self.current_settings.update({'position_x': 50, 'position_y': 50})
-        if hasattr(self.parent(), 'preview_panel'):
-            self.parent().preview_panel.watermark_label.position_changed.connect(self.update_watermark_position)
         self.init_ui()
         
     def init_ui(self):
@@ -125,9 +123,8 @@ class WatermarkPanel(QWidget):
         
         self.apply_to_all_check.setChecked(False)
         
-        # 连接预览面板信号
-        if hasattr(self.parent(), 'preview_panel'):
-            self.parent().preview_panel.watermark_label.position_changed.connect(self.update_watermark_position)  # 默认不勾选
+        # 连接预览面板信号 - 延迟到实际使用时连接
+        self.preview_panel_connected = False
         self.apply_to_all_check.setObjectName("applyToAllCheckbox")
         self.current_settings = {
             'apply_to_all': False,
@@ -182,7 +179,7 @@ class WatermarkPanel(QWidget):
         size_style_layout = QHBoxLayout()
         
         self.size_spin = QSpinBox()
-        self.size_spin.setRange(8, 100)
+        self.size_spin.setRange(8, 600)
         self.size_spin.setValue(self.current_settings['size'])
         self.size_spin.valueChanged.connect(self.on_size_changed)
         size_style_layout.addWidget(QLabel("字号:"))
@@ -488,10 +485,19 @@ class WatermarkPanel(QWidget):
         layout.addWidget(export_group)
         
     # 应用范围相关方法
-    def update_watermark_position(self, pos):
+    def connect_preview_signals(self, preview_panel):
+        """连接预览面板的信号"""
+        if not self.preview_panel_connected and preview_panel and hasattr(preview_panel, 'watermark_label'):
+            preview_panel.watermark_label.position_changed.connect(self.update_watermark_position)
+            self.preview_panel_connected = True
+    
+    def update_watermark_position(self, x, y):
         """更新水印位置坐标"""
-        self.current_settings['position_x'] = pos.x()
-        self.current_settings['position_y'] = pos.y()
+        self.current_settings['position_x'] = x
+        self.current_settings['position_y'] = y
+        self.current_settings['x'] = x
+        self.current_settings['y'] = y
+        self.current_settings['position'] = 'custom'
         self.settings_changed.emit()
 
     def on_apply_to_all_toggled(self, checked):
@@ -700,14 +706,32 @@ class WatermarkPanel(QWidget):
                 self.italic_check.setChecked(self.current_settings.get('italic', False))
                 
                 color = self.current_settings.get('color')
-                if not isinstance(color, QColor) or not color.isValid(): color = QColor(255, 255, 255)
+                # 处理字符串格式的颜色
+                if isinstance(color, str):
+                    try:
+                        color = QColor(color)
+                        if not color.isValid():
+                            color = QColor(255, 255, 255)  # 默认白色
+                    except:
+                        color = QColor(255, 255, 255)  # 默认白色
+                elif not isinstance(color, QColor) or not color.isValid():
+                    color = QColor(255, 255, 255)  # 默认白色
                 self.current_settings['color'] = color
                 self.update_color_button()
                 self.update_color_label()
 
                 self.bg_check.setChecked(self.current_settings.get('background', False))
                 bg_color = self.current_settings.get('bg_color')
-                if not isinstance(bg_color, QColor) or not bg_color.isValid(): bg_color = QColor(0, 0, 0)
+                # 处理字符串格式的背景颜色
+                if isinstance(bg_color, str):
+                    try:
+                        bg_color = QColor(bg_color)
+                        if not bg_color.isValid():
+                            bg_color = QColor(0, 0, 0)  # 默认黑色
+                    except:
+                        bg_color = QColor(0, 0, 0)  # 默认黑色
+                elif not isinstance(bg_color, QColor) or not bg_color.isValid():
+                    bg_color = QColor(0, 0, 0)  # 默认黑色
                 self.current_settings['bg_color'] = bg_color
                 self.update_bg_color_button()
                 self.bg_opacity_slider.setValue(self.current_settings.get('bg_opacity', 50))
@@ -823,6 +847,20 @@ class WatermarkPanel(QWidget):
         self.current_settings['y'] = value
         self.settings_changed.emit()
     
+    def update_position_from_drag(self, x, y):
+        """从拖拽操作更新水印位置坐标"""
+        self.current_settings['position_x'] = x
+        self.current_settings['position_y'] = y
+        self.current_settings['x'] = x
+        self.current_settings['y'] = y
+        # 更新UI控件
+        if hasattr(self, 'position_x_spin'):
+            self.position_x_spin.setValue(x)
+        if hasattr(self, 'position_y_spin'):
+            self.position_y_spin.setValue(y)
+        # 发射设置变更信号
+        self.settings_changed.emit()
+
     # 预设水印相关方法
     def load_preset_watermarks(self):
         """加载预设水印图片"""

@@ -164,14 +164,52 @@ class ConfigManager:
         try:
             return self.config.get('default_settings', {})
         except Exception as e:
-            logger.error(f"加载默认设置失败: {e}")
+            print(f"加载默认设置失败: {e}")
             return {}
     
     def save_settings(self, settings, file_path):
         """保存设置到文件"""
         try:
+            # 验证settings参数
+            if not isinstance(settings, dict):
+                print("保存设置失败: 设置数据必须是字典类型")
+                return False
+            
+            # 确保输出目录存在
+            file_dir = os.path.dirname(file_path)
+            if not os.path.exists(file_dir):
+                os.makedirs(file_dir)
+                
+            # 确保文件扩展名为.json
+            if not file_path.endswith('.json'):
+                file_path += '.json'
+                
+            # 深拷贝settings以避免修改原始数据
+            import copy
+            settings_copy = copy.deepcopy(settings)
+            
+            # 确保必要的字段存在并具有合理的默认值
+            if 'text_watermark' in settings_copy:
+                text_settings = settings_copy['text_watermark']
+                # 检查并处理QColor对象
+                if 'color' in text_settings:
+                    from PyQt6.QtGui import QColor
+                    if isinstance(text_settings['color'], QColor):
+                        # 将QColor对象转换为十六进制字符串
+                        text_settings['color'] = text_settings['color'].name()
+                elif 'color' not in text_settings or not text_settings['color']:
+                    text_settings['color'] = '#FFFFFF'
+                    
+            # 尝试JSON序列化以验证数据结构
+            try:
+                json.dumps(settings_copy)
+            except (TypeError, OverflowError) as json_err:
+                print(f"保存设置失败: 数据结构无法序列化: {json_err}")
+                return False
+                
+            # 保存设置文件
             with open(file_path, 'w', encoding='utf-8') as f:
-                json.dump(settings, f, ensure_ascii=False, indent=4)
+                json.dump(settings_copy, f, ensure_ascii=False, indent=4)
             return True
         except Exception as e:
             print(f"保存设置失败: {e}")
@@ -180,8 +218,44 @@ class ConfigManager:
     def load_settings(self, file_path):
         """从文件加载设置"""
         try:
+            # 验证文件路径
+            if not os.path.exists(file_path):
+                print(f"加载设置失败: 文件不存在: {file_path}")
+                return {}
+                
+            # 验证文件扩展名
+            if not file_path.endswith('.json'):
+                print(f"加载设置失败: 文件必须是JSON格式: {file_path}")
+                return {}
+                
+            # 读取并解析JSON文件
             with open(file_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
+                settings = json.load(f)
+                
+            # 验证settings是字典类型
+            if not isinstance(settings, dict):
+                print("加载设置失败: 配置数据不是有效的字典格式")
+                return {}
+                
+            # 确保必要的字段存在
+            if 'text_watermark' in settings:
+                text_settings = settings['text_watermark']
+                if 'color' not in text_settings or not text_settings['color']:
+                    text_settings['color'] = '#FFFFFF'
+                else:
+                    # 将颜色字符串转换为QColor对象
+                    from PyQt6.QtGui import QColor
+                    if isinstance(text_settings['color'], str):
+                        try:
+                            text_settings['color'] = QColor(text_settings['color'])
+                        except Exception as e:
+                            print(f"解析颜色值失败: {e}")
+                            text_settings['color'] = QColor('#FFFFFF')
+                            
+            return settings
+        except json.JSONDecodeError as json_err:
+            print(f"加载设置失败: JSON格式错误: {json_err}")
+            return {}
         except Exception as e:
             print(f"加载设置失败: {e}")
             return {}

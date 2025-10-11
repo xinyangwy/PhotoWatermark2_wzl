@@ -24,6 +24,7 @@ class DragDropListWidget(QListWidget):
         super().__init__(parent)
         self.setAcceptDrops(True)
         self.setDragDropMode(QListWidget.DragDropMode.DropOnly)
+        self.parent_panel = parent  # 保存父面板引用
     
     def dragEnterEvent(self, event: QDragEnterEvent):
         """拖拽进入事件"""
@@ -108,9 +109,30 @@ class ImageListPanel(QWidget):
     """图片列表面板"""
     
     # 图片选中信号
+    # 图片选中信号
     image_selected = pyqtSignal(str)
     # 图片列表改变信号
     image_list_changed = pyqtSignal(list)
+    
+    def remove_image(self, image_path):
+        """移除指定路径的图片"""
+        # 从列表中移除
+        for i in range(self.image_list.count()):
+            item = self.image_list.item(i)
+            if item.data(Qt.ItemDataRole.UserRole) == image_path:
+                # 从数据列表中移除
+                if image_path in self.image_paths:
+                    self.image_paths.remove(image_path)
+                # 从缩略图缓存中移除
+                if image_path in self.thumbnail_cache:
+                    del self.thumbnail_cache[image_path]
+                # 从列表中移除
+                self.image_list.takeItem(i)
+                break
+        
+        # 更新UI
+        self.update_count()
+        self.image_list_changed.emit(self.image_paths)
     
     def __init__(self):
         super().__init__()
@@ -154,13 +176,10 @@ class ImageListPanel(QWidget):
         self.image_list.itemClicked.connect(self.on_item_clicked)
         layout.addWidget(self.image_list)
         
-        # 进度条（用于批量操作）
-        self.progress_bar = QProgressBar()
-        self.progress_bar.setVisible(False)
-        layout.addWidget(self.progress_bar)
+
         
         # 按钮布局
-        button_group = QGroupBox("操作")
+        button_group = QGroupBox("常用操作")
         button_layout = QGridLayout(button_group)
         
         self.import_btn = QPushButton("导入图片")
@@ -210,6 +229,9 @@ class ImageListPanel(QWidget):
                 item.setToolTip(image_path)
                 item.setData(Qt.ItemDataRole.UserRole, image_path)  # 将路径存储在用户数据中
                 
+                # 设置固定大小以适应图片和按钮
+                item.setSizeHint(QSize(140, 150))
+                
                 # 检查缓存中是否有缩略图
                 if image_path in self.thumbnail_cache:
                     item.setIcon(QIcon(self.thumbnail_cache[image_path]))
@@ -219,6 +241,49 @@ class ImageListPanel(QWidget):
                     self.pending_thumbnails.add(image_path)
                 
                 self.image_list.addItem(item)
+                
+                # 创建自定义widget包含图片和删除按钮
+                widget = QWidget()
+                layout = QVBoxLayout(widget)
+                
+                # 创建水平布局用于放置图标和删除按钮
+                icon_layout = QHBoxLayout()
+                
+                # 图标标签
+                icon_label = QLabel()
+                if image_path in self.thumbnail_cache:
+                    icon_label.setPixmap(self.thumbnail_cache[image_path])
+                icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+                icon_label.setMinimumSize(120, 120)
+                
+                # 删除按钮
+                delete_btn = QPushButton("×")
+                delete_btn.setStyleSheet("""
+                    QPushButton {
+                        background-color: #f44336;
+                        color: white;
+                        border: none;
+                        border-radius: 10px;
+                        width: 20px;
+                        height: 20px;
+                        font-weight: bold;
+                        font-size: 12px;
+                    }
+                    QPushButton:hover {
+                        background-color: #d32f2f;
+                    }
+                """)
+                delete_btn.setFixedSize(20, 20)
+                delete_btn.setToolTip("删除此图片")
+                delete_btn.clicked.connect(lambda checked, path=image_path: self.remove_image(path))
+                
+                icon_layout.addWidget(icon_label)
+                icon_layout.addWidget(delete_btn)
+                
+                layout.addLayout(icon_layout)
+                layout.setContentsMargins(5, 5, 5, 5)
+                
+                self.image_list.setItemWidget(item, widget)
         
         if valid_images:
             self.update_count()
@@ -365,21 +430,10 @@ class ImageListPanel(QWidget):
         # 从待加载列表中移除
         self.pending_thumbnails.discard(image_path)
     
+
+    
     @pyqtSlot()
     def on_thumbnail_loading_finished(self):
         """缩略图加载完成"""
         self.logger.info("缩略图加载完成")
         self.thumbnail_loader = None
-    
-    def set_progress_visible(self, visible):
-        """设置进度条可见性"""
-        self.progress_bar.setVisible(visible)
-    
-    def set_progress_value(self, value):
-        """设置进度条值"""
-        self.progress_bar.setValue(value)
-    
-    def set_progress_range(self, minimum, maximum):
-        """设置进度条范围"""
-        self.progress_bar.setMinimum(minimum)
-        self.progress_bar.setMaximum(maximum)

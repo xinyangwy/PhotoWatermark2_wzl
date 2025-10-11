@@ -10,10 +10,9 @@ import os
 import logging
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
                              QScrollArea, QFrame, QSplitter, QSizePolicy,
-                             QSlider, QComboBox)
+                             QSlider, QComboBox, QToolTip)
 from PyQt6.QtCore import Qt, pyqtSignal, QPoint, QRect, QRectF
-from PyQt6.QtWidgets import QToolTip
-from PyQt6.QtGui import QPixmap, QPainter, QMouseEvent, QPen, QColor
+from PyQt6.QtGui import QPixmap, QPainter, QMouseEvent, QPen, QColor, QCursor
 
 # 配置日志
 logger = logging.getLogger(__name__)
@@ -23,167 +22,87 @@ class DraggableWatermarkLabel(QLabel):
     """可拖拽的水印标签"""
     
     position_changed = pyqtSignal(QPoint)  # 水印位置改变信号
-    drag_started = pyqtSignal()  # 开始拖拽
-    drag_finished = pyqtSignal()  # 结束拖拽
+    drag_started = pyqtSignal()  # 拖拽开始信号
+    drag_finished = pyqtSignal()  # 拖拽结束信号
     
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.is_dragging = False
-        self.drag_start_pos = QPoint()
         self.watermark_pos = QPoint(50, 50)  # 默认水印位置
-        self.watermark_size = QPoint(100, 50)  # 默认水印大小
-        self.show_drag_handle = False
-        self.show_grid = False  # 显示对齐网格
-        self.snap_enabled = True  # 启用吸附功能
-        self.snap_distance = 10  # 吸附距离（像素）
-        self.last_update_pos = QPoint()  # 上次更新位置
-        self.update_interval = 10  # 增大更新间隔优化性能
-        self.setMouseTracking(True)  # 启用鼠标跟踪，提高交互体验
+        self.watermark_size = QPoint(0, 0)  # 动态计算水印大小
+        self.is_dragging = False  # 拖拽状态标记
+        self.drag_start_pos = QPoint()  # 拖拽起始位置
+        self.watermark_rect = QRect()  # 水印区域
+        # 启用鼠标跟踪以支持拖拽功能
+        self.setMouseTracking(True)
         
     def mousePressEvent(self, event: QMouseEvent):
-        """鼠标按下事件"""
+        """鼠标按下事件 - 开始拖拽"""
         if event.button() == Qt.MouseButton.LeftButton:
-            # 检查是否点击在水印区域内
-            watermark_rect = QRect(self.watermark_pos, self.watermark_size)
-            # 增加可点击区域，使水印更容易被选中
-            extended_rect = watermark_rect.adjusted(-10, -10, 10, 10)
-            if extended_rect.contains(event.pos()):
-                self.is_dragging = True
-                self.drag_start_pos = event.pos()
-                self.show_drag_handle = True
-                self.setCursor(Qt.CursorShape.ClosedHandCursor)  # 鼠标变为抓手形状
-                self.drag_started.emit()
-                self.update()
-        
+            # 检查点击位置是否在水印区域内
+            if self.watermark_size.x() > 0 and self.watermark_size.y() > 0:
+                watermark_rect = QRect(self.watermark_pos, self.watermark_size)
+                if watermark_rect.contains(event.position().toPoint()):
+                    self.is_dragging = True
+                    self.drag_start_pos = event.position().toPoint() - self.watermark_pos
+                    self.drag_started.emit()
+                    self.setCursor(Qt.CursorShape.ClosedHandCursor)
+                    logger.debug(f"开始拖拽水印，位置: {self.watermark_pos}, 大小: {self.watermark_size}")
         super().mousePressEvent(event)
     
     def enterEvent(self, event):
         """鼠标进入水印区域时显示提示"""
-        QToolTip.showText(
-            event.globalPosition().toPoint(),
-            "拖拽调整水印位置\n按住Shift键临时禁用吸附",
-            msecShowTime=2000
-        )
+        if self.pixmap() and not self.pixmap().isNull():
+            # 检查鼠标位置是否在水印区域内
+            watermark_rect = QRect(self.watermark_pos, self.watermark_size)
+            current_pos = self.mapFromGlobal(QCursor.pos())
+            if watermark_rect.contains(current_pos):
+                QToolTip.showText(QCursor.pos(), "拖拽以移动水印位置")
         super().enterEvent(event)
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        """鼠标移动事件"""
+        """鼠标移动事件 - 处理拖拽"""
         if self.is_dragging:
-            # 计算拖拽偏移量
-            delta = event.pos() - self.drag_start_pos
-            self.watermark_pos += delta
-            
-            # 检查Shift键状态，临时禁用吸附
-            self.snap_enabled = not (event.modifiers() & Qt.KeyboardModifier.ShiftModifier)
-            
-            # 限制水印位置在图片范围内
-            self.ensure_valid_position()
-            
-            # 简化的节流更新机制
-            if (abs(self.watermark_pos.x() - self.last_update_pos.x()) >= self.update_interval or 
-                abs(self.watermark_pos.y() - self.last_update_pos.y()) >= self.update_interval):
-                self.position_changed.emit(self.watermark_pos)
-                self.setToolTip(f"当前坐标: ({self.watermark_pos.x()},{self.watermark_pos.y()})\n按住Shift键禁用吸附")
-                self.update()
-                self.last_update_pos = QPoint(self.watermark_pos)
-                
-            self.drag_start_pos = event.pos()
+            # 计算新位置
+            new_pos = event.position().toPoint() - self.drag_start_pos
+            self.update_position(new_pos)
+            logger.debug(f"拖拽中，新位置: {new_pos}")
         else:
-            # 鼠标悬停在水印区域上时改变鼠标形状
-            # 优化：减少不必要的矩形计算
-            watermark_rect = QRect(self.watermark_pos, self.watermark_size)
-            # 增加更大的可点击区域，使水印更容易被选中
-            extended_rect = watermark_rect.adjusted(-15, -15, 15, 15)
-            
-            # 只在需要时才更新网格显示和鼠标形状
-            if extended_rect.contains(event.pos()):
-                if self.cursor() != Qt.CursorShape.OpenHandCursor:
-                    self.setCursor(Qt.CursorShape.OpenHandCursor)  # 鼠标变为张开的手形
-                # 显示网格辅助对齐和提示
-                if not self.show_grid:
-                    self.show_grid = True
-                    self.setToolTip(f"当前坐标: ({self.watermark_pos.x()},{self.watermark_pos.y()})\n按住Shift键禁用吸附")
-                    self.update()
-            else:
-                if self.cursor() != Qt.CursorShape.ArrowCursor:
-                    self.unsetCursor()  # 恢复默认鼠标形状
-                # 隐藏网格
-                if self.show_grid:
-                    self.show_grid = False
-                    self.update()
-        
+            # 悬停在水印上时显示手型光标
+            if self.pixmap() and not self.pixmap().isNull() and self.watermark_size.x() > 0 and self.watermark_size.y() > 0:
+                watermark_rect = QRect(self.watermark_pos, self.watermark_size)
+                if watermark_rect.contains(event.position().toPoint()):
+                    self.setCursor(Qt.CursorShape.OpenHandCursor)
+                else:
+                    self.unsetCursor()
         super().mouseMoveEvent(event)
     
     def mouseReleaseEvent(self, event: QMouseEvent):
-        """鼠标释放事件"""
+        """鼠标释放事件 - 结束拖拽"""
         if event.button() == Qt.MouseButton.LeftButton and self.is_dragging:
             self.is_dragging = False
-            self.show_drag_handle = False
-            self.unsetCursor()  # 恢复默认鼠标形状
             self.drag_finished.emit()
-            self.update()
-            # 确保最终位置同步
-            self.position_changed.emit(self.watermark_pos)
-            self.update()
-        
+            self.unsetCursor()
         super().mouseReleaseEvent(event)
     
     def paintEvent(self, event):
-        """绘制事件 - 优化版，减少不必要的绘制操作"""
+        """绘制事件 - 显示水印可拖拽区域"""
         super().paintEvent(event)
         
-        # 只在需要绘制额外元素时才创建painter对象
-        if (self.show_drag_handle or self.show_grid) and self.pixmap() and not self.pixmap().isNull():
+        # 只在有水印图片且水印大小有效时绘制水印区域边框
+        if self.pixmap() and not self.pixmap().isNull() and self.watermark_size.x() > 0 and self.watermark_size.y() > 0:
             painter = QPainter(self)
             painter.setRenderHint(QPainter.RenderHint.Antialiasing)
             
-            # 计算中心点（只计算一次）
-            center_x = self.watermark_pos.x() + self.watermark_size.x() // 2
-            center_y = self.watermark_pos.y() + self.watermark_size.y() // 2
-            
-            # 绘制对齐网格（如果启用且非拖拽状态）
-            if self.show_grid and not self.is_dragging:
-                # 减少透明度以降低绘制开销
-                grid_pen = QPen(QColor(200, 200, 200, 80), 1)
-                grid_pen.setStyle(Qt.PenStyle.DotLine)
-                painter.setPen(grid_pen)
-                
-                # 绘制中心参考线
-                pixmap_size = self.pixmap().size()
-                center_pix_x = pixmap_size.width() // 2
-                center_pix_y = pixmap_size.height() // 2
-                
-                painter.drawLine(center_pix_x, 0, center_pix_x, pixmap_size.height())
-                painter.drawLine(0, center_pix_y, pixmap_size.width(), center_pix_y)
-            
-            # 绘制水印区域边框
-            border_pen = QPen(QColor(255, 0, 0, 220), 2)
+            # 绘制水印区域边框（红色虚线，便于用户识别可拖拽区域）
+            border_pen = QPen(QColor(255, 0, 0, 180), 2)
             border_pen.setStyle(Qt.PenStyle.DashLine)
             painter.setPen(border_pen)
-            painter.drawRect(QRect(self.watermark_pos, self.watermark_size))
+            watermark_rect = QRect(self.watermark_pos, self.watermark_size)
+            painter.drawRect(watermark_rect)
             
-            # 绘制拖拽手柄
-            handle_rect = QRect(self.watermark_pos.x() + self.watermark_size.x() - 12,
-                              self.watermark_pos.y() + self.watermark_size.y() - 12, 10, 10)
-            painter.fillRect(handle_rect, QColor(255, 0, 0, 220))
-            
-            # 绘制中心点标记
-            center_pen = QPen(QColor(255, 255, 0, 220), 2)
-            painter.setPen(center_pen)
-            painter.drawLine(center_x - 5, center_y, center_x + 5, center_y)
-            painter.drawLine(center_x, center_y - 5, center_x, center_y + 5)
-            
-            # 绘制对齐辅助线（只在拖拽时）
-            if self.is_dragging:
-                # 降低透明度以提高性能
-                align_pen = QPen(QColor(0, 255, 0, 120), 1)
-                align_pen.setStyle(Qt.PenStyle.DashLine)
-                painter.setPen(align_pen)
-                
-                # 水平对齐线
-                painter.drawLine(0, center_y, self.width(), center_y)
-                # 垂直对齐线
-                painter.drawLine(center_x, 0, center_x, self.height())
+            # 在边框内添加提示文字
+            painter.setPen(QPen(QColor(255, 255, 255, 200)))
+            painter.drawText(watermark_rect, Qt.AlignmentFlag.AlignCenter, "可拖拽")
     
     def set_watermark_position(self, pos: QPoint):
         """设置水印位置"""
@@ -194,8 +113,10 @@ class DraggableWatermarkLabel(QLabel):
     def set_watermark_size(self, size: QPoint):
         """设置水印大小"""
         self.watermark_size = size
+        self.watermark_rect = QRect(self.watermark_pos, self.watermark_size)
         self.ensure_valid_position()
         self.update()
+        logger.debug(f"水印大小已设置: {self.watermark_size}")
     
     def get_watermark_position(self) -> QPoint:
         """获取水印位置"""
@@ -206,54 +127,29 @@ class DraggableWatermarkLabel(QLabel):
         return self.watermark_size
         
     def ensure_valid_position(self):
-        """确保水印位置在有效范围内 - 优化版，减少计算复杂度"""
+        """确保水印位置在有效范围内 - 简化版，移除吸附功能"""
         if self.pixmap() and not self.pixmap().isNull():
             pixmap_size = self.pixmap().size()
             
-            # 缓存常用计算结果
-            snap_dist = self.snap_distance
-            wm_pos_x, wm_pos_y = self.watermark_pos.x(), self.watermark_pos.y()
             wm_width, wm_height = self.watermark_size.x(), self.watermark_size.y()
             img_width, img_height = pixmap_size.width(), pixmap_size.height()
             
-            # 计算最大允许位置（只计算一次）
+            # 计算最大允许位置
             max_x = img_width - wm_width
             max_y = img_height - wm_height
             
-            # 应用网格对齐和吸附功能
-            if self.snap_enabled:
-                # 对齐到图片边界（优化条件判断）
-                if wm_pos_x <= snap_dist:
-                    self.watermark_pos.setX(0)
-                elif (max_x - wm_pos_x) <= snap_dist:
-                    self.watermark_pos.setX(max_x)
-                else:
-                    # 仅在未吸附到边界时计算中心线吸附
-                    center_x = (img_width - wm_width) // 2
-                    if abs(wm_pos_x - center_x) <= snap_dist:
-                        self.watermark_pos.setX(center_x)
-                
-                if wm_pos_y <= snap_dist:
-                    self.watermark_pos.setY(0)
-                elif (max_y - wm_pos_y) <= snap_dist:
-                    self.watermark_pos.setY(max_y)
-                else:
-                    # 仅在未吸附到边界时计算中心线吸附
-                    center_y = (img_height - wm_height) // 2
-                    if abs(wm_pos_y - center_y) <= snap_dist:
-                        self.watermark_pos.setY(center_y)
-            
-            # 确保水印完全在图片范围内（避免重复访问属性）
+            # 确保水印完全在图片范围内
             self.watermark_pos.setX(max(0, min(self.watermark_pos.x(), max_x)))
             self.watermark_pos.setY(max(0, min(self.watermark_pos.y(), max_y)))
             
             logger.debug(f"水印位置已调整: {self.watermark_pos}, 图片尺寸: {img_width}x{img_height}")
             
     def update_position(self, pos: QPoint):
-        """更新水印位置"""
+        """更新水印位置并发射信号"""
         self.watermark_pos = pos
         self.ensure_valid_position()
         self.update()
+        # 发射位置改变信号
         self.position_changed.emit(self.watermark_pos)
 
 
@@ -287,8 +183,8 @@ class PreviewPanel(QWidget):
         
         # 连接水印位置改变信号
         self.watermarked_label.position_changed.connect(self.on_watermark_position_changed)
-        # 连接拖拽开始/结束信号用于优化缩放刷新
-        self.watermarked_label.drag_started.connect(lambda: setattr(self, '_is_dragging', True))
+        # 连接拖拽开始/结束信号
+        self.watermarked_label.drag_started.connect(self._on_drag_started)
         self.watermarked_label.drag_finished.connect(self._on_drag_finished)
         
         # 添加水印预览区域
@@ -373,62 +269,34 @@ class PreviewPanel(QWidget):
         return self.watermarked_pixmap
     
     def on_watermark_position_changed(self, position: QPoint):
-        """水印位置改变处理 - 优化版，减少计算和提升拖拽流畅性"""
+        """水印位置改变处理 - 简化版，确保流畅的拖拽体验"""
         try:
-            # 在拖拽过程中减少对图片尺寸的频繁获取
-            if hasattr(self, '_cached_image_size'):
-                img_width, img_height = self._cached_image_size
-            else:
-                # 获取实际图片尺寸
-                if self.watermarked_pixmap and not self.watermarked_pixmap.isNull():
-                    img_width = self.watermarked_pixmap.width()
-                    img_height = self.watermarked_pixmap.height()
-                    # 缓存图片尺寸，减少重复获取
-                    self._cached_image_size = (img_width, img_height)
-                else:
-                    img_width, img_height = 0, 0
-                    self._cached_image_size = (img_width, img_height)
-                
             # 存储实际位置（考虑缩放因素）
             actual_position = QPoint(int(position.x() / self.zoom_factor), int(position.y() / self.zoom_factor))
             
-            # 避免不必要的更新
-            if hasattr(self, '_last_pos') and self._last_pos == actual_position:
-                return
-            
-            self.current_watermark_position = actual_position
-            
-            # 确保水印位置在图片范围内
-            if img_width > 0 and img_height > 0:
-                # 计算实际图片尺寸下的最大位置
+            # 获取实际图片尺寸
+            img_width, img_height = 0, 0
+            if self.watermarked_pixmap and not self.watermarked_pixmap.isNull():
+                img_width = self.watermarked_pixmap.width()
+                img_height = self.watermarked_pixmap.height()
+                
+                # 确保水印位置在图片范围内
                 wm_width, wm_height = int(self.watermark_size.x()), int(self.watermark_size.y())
                 max_x = max(0, img_width - wm_width)
                 max_y = max(0, img_height - wm_height)
                 
-                # 限制实际位置在有效范围内 - 使用更简洁的写法
-                real_x = actual_position.x()
-                real_y = actual_position.y()
-                real_x = real_x if real_x > 0 and real_x < max_x else (0 if real_x <= 0 else max_x)
-                real_y = real_y if real_y > 0 and real_y < max_y else (0 if real_y <= 0 else max_y)
+                # 限制实际位置在有效范围内
+                real_x = max(0, min(actual_position.x(), max_x))
+                real_y = max(0, min(actual_position.y(), max_y))
                 
                 actual_position.setX(real_x)
                 actual_position.setY(real_y)
-                
-                # 同步更新当前位置
-                self.current_watermark_position = actual_position
             
-            # 减少日志频率，只在位置变化较大时记录
-            if hasattr(self, '_last_logged_pos'):
-                last_x, last_y = self._last_logged_pos
-                if abs(actual_position.x() - last_x) > 10 or abs(actual_position.y() - last_y) > 10:
-                    logger.debug(f"水印位置已改变: {self.current_watermark_position}")
-                    self._last_logged_pos = (actual_position.x(), actual_position.y())
-            else:
-                logger.debug(f"水印位置已改变: {self.current_watermark_position}")
-                self._last_logged_pos = (actual_position.x(), actual_position.y())
+            # 更新当前位置
+            self.current_watermark_position = actual_position
             
-            # 保存上次位置以避免不必要的更新
-            self._last_pos = actual_position
+            # 记录日志
+            logger.debug(f"水印位置已改变: {self.current_watermark_position}")
             
             # 发送实际位置信号
             self.position_changed.emit(actual_position)
@@ -464,30 +332,12 @@ class PreviewPanel(QWidget):
         pass
             
     def update_zoom_display(self):
-        """更新缩放显示 - 优化版，减少计算和提升性能"""
+        """更新缩放显示 - 简化版，确保流畅的拖拽体验"""
         try:
-            # 避免在拖拽过程中频繁调用此方法
-            if hasattr(self, '_is_dragging') and self._is_dragging:
-                # 只在拖拽结束后才完全更新
-                return
-                
-            # 获取图片尺寸（优先使用缓存）
-            if hasattr(self, '_cached_image_size'):
-                img_width, img_height = self._cached_image_size
-            else:
-                if self.watermarked_pixmap and not self.watermarked_pixmap.isNull():
-                    img_width = self.watermarked_pixmap.width()
-                    img_height = self.watermarked_pixmap.height()
-                    self._cached_image_size = (img_width, img_height)
-                else:
-                    img_width, img_height = 0, 0
-                    self._cached_image_size = (img_width, img_height)
-                
             if self.watermarked_pixmap and not self.watermarked_pixmap.isNull():
                 # 获取预览区域的实际可用尺寸
                 scroll_area_size = self.watermarked_scroll.viewport().size()
                 
-                    # 固定使用100%缩放（但保持自动适应窗口大小的功能）
                 # 获取图片尺寸
                 pixmap_size = self.watermarked_pixmap.size()
                 
@@ -503,7 +353,7 @@ class PreviewPanel(QWidget):
                     scaled_height = int(pixmap_size.height() * adaptive_ratio)
                     
                     # 拖拽时使用更快的变换模式
-                    transform_mode = Qt.TransformationMode.FastTransformation if hasattr(self, '_is_dragging') and self._is_dragging else Qt.TransformationMode.SmoothTransformation
+                    transform_mode = Qt.TransformationMode.FastTransformation if self._is_dragging else Qt.TransformationMode.SmoothTransformation
                     scaled_pixmap = self.watermarked_pixmap.scaled(
                         scaled_width, scaled_height,
                         Qt.AspectRatioMode.KeepAspectRatio,
@@ -516,13 +366,10 @@ class PreviewPanel(QWidget):
                 
                 self.watermarked_label.setText("")
                 
-                # 高效更新水印大小和位置以适应缩放
-                # 只在必要时才更新水印大小
-                if not hasattr(self, '_last_watermark_size') or self._last_watermark_size != self.watermark_size:
-                    scaled_watermark_width = int(self.watermark_size.x() * self.zoom_factor)
-                    scaled_watermark_height = int(self.watermark_size.y() * self.zoom_factor)
-                    self.watermarked_label.set_watermark_size(QPoint(scaled_watermark_width, scaled_watermark_height))
-                    self._last_watermark_size = self.watermark_size
+                # 更新水印大小和位置以适应缩放
+                scaled_watermark_width = int(self.watermark_size.x() * self.zoom_factor)
+                scaled_watermark_height = int(self.watermark_size.y() * self.zoom_factor)
+                self.watermarked_label.set_watermark_size(QPoint(scaled_watermark_width, scaled_watermark_height))
                 
                 # 同步水印位置
                 if self.current_watermark_position:
@@ -530,30 +377,24 @@ class PreviewPanel(QWidget):
                         int(self.current_watermark_position.x() * self.zoom_factor),
                         int(self.current_watermark_position.y() * self.zoom_factor)
                     )
-                    # 只在位置变化时才更新
-                    if hasattr(self, '_last_watermark_pos') and self._last_watermark_pos == scaled_pos:
-                        pass
-                    else:
-                        self.watermarked_label.set_watermark_position(scaled_pos)
-                        self._last_watermark_pos = scaled_pos
+                    self.watermarked_label.set_watermark_position(scaled_pos)
                 
-            # 减少日志频率
-            if img_width > 0 and img_height > 0:
-                if hasattr(self, '_last_logged_zoom'):
-                    if abs(self.zoom_factor - self._last_logged_zoom) > 0.1:
-                        display_width = int(img_width * self.zoom_factor)
-                        display_height = int(img_height * self.zoom_factor)
-                        logger.debug(f"缩放已更新: {self.zoom_factor}, 显示尺寸: {display_width}x{display_height}")
-                        self._last_logged_zoom = self.zoom_factor
-                else:
+            # 记录日志
+            if self.watermarked_pixmap and not self.watermarked_pixmap.isNull():
+                img_width = self.watermarked_pixmap.width()
+                img_height = self.watermarked_pixmap.height()
+                if img_width > 0 and img_height > 0:
                     display_width = int(img_width * self.zoom_factor)
                     display_height = int(img_height * self.zoom_factor)
                     logger.debug(f"缩放已更新: {self.zoom_factor}, 显示尺寸: {display_width}x{display_height}")
-                    self._last_logged_zoom = self.zoom_factor
                     
         except Exception as e:
             logger.error(f"更新缩放显示时出错: {str(e)}")
     
+    def _on_drag_started(self):
+        """拖拽开始时的处理"""
+        self._is_dragging = True
+        
     def _on_drag_finished(self):
         """拖拽结束时刷新缩放显示"""
         self._is_dragging = False

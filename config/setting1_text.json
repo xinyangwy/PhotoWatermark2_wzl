@@ -1,0 +1,19 @@
+{
+    "text_watermark": {
+        "apply_to_all": false,
+        "text": "PhotoMark2",
+        "font": "Arial",
+        "size": 300,
+        "bold": true,
+        "italic": true,
+        "color": "#ffffff",
+        "opacity": 80,
+        "position": "bottom_right",
+        "bg_color": "#aa0000",
+        "margin": 200,
+        "rotation": 7,
+        "background": true,
+        "bg_opacity": 74
+    },
+    "watermark_type": "text"
+}
