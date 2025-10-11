@@ -1,0 +1,9 @@
+{
+    "image_watermark": {
+        "apply_to_all": false,
+        "scale": 100,
+        "opacity": 100,
+        "position": "bottom_right"
+    },
+    "watermark_type": "image"
+}

@@ -587,13 +587,18 @@ class PhotoMarkApp(QMainWindow):
         if current_tab_index in [0, 1]:  # Text or Image
             panel = self.settings_tabs.currentWidget()
             
-            # 只有在明确勾选了"应用到全部"时，才更新面板设置
+            # 只有在明确勾选了"应用到全部"时，才更新面板设置为master设置
             if panel.get_settings().get('apply_to_all', False):
                 if current_tab_index == 0:
                     panel.set_settings(self.master_text_settings.copy())
                 else:
                     panel.set_settings(self.master_image_settings.copy())
-            # 否则保持当前面板设置不变，避免不必要的重新计算
+            else:
+                # 当没有勾选"应用到全部"时，应用默认水印设置
+                if current_tab_index == 0:
+                    panel.set_settings(panel.default_settings['text'].copy())
+                else:
+                    panel.set_settings(panel.default_settings['image'].copy())
             
             # 设置标记表示这是由于图片切换引起的预览
             self._is_image_switching = True
