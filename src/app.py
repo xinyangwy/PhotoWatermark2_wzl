@@ -563,9 +563,6 @@ class PhotoMarkApp(QMainWindow):
         # 水印面板信号
         self.text_watermark_panel.settings_changed.connect(self.on_settings_changed)
         self.image_watermark_panel.settings_changed.connect(self.on_settings_changed)
-        
-        # 预览面板位置变化信号
-        self.preview_panel.position_changed.connect(self.on_watermark_position_changed)
     
     @pyqtSlot(str)
     def on_image_selected(self, image_path: str):

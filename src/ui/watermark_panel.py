@@ -873,6 +873,14 @@ class WatermarkPanel(QWidget):
         if os.path.exists(file_path):
             self.current_settings['watermark_path'] = file_path
             self.image_path_label.setText(os.path.basename(file_path))
+            
+            # 将缩放比例设置为最大值
+            self.current_settings['scale'] = 200
+            if hasattr(self, 'scale_slider'):
+                self.scale_slider.blockSignals(True)
+                self.scale_slider.setValue(200)
+                self.scale_slider.blockSignals(False)
+            
             self.settings_changed.emit()
             
             # 可选：添加一些视觉反馈，比如高亮选中的预设水印
