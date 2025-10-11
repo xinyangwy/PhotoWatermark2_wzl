@@ -196,6 +196,14 @@ class WatermarkProcessor:
             if not watermark_path:
                 logger.error("水印图片文件不存在: 未指定水印图片路径")
                 return None
+            
+            # 处理相对路径
+            if not os.path.isabs(watermark_path):
+                # 获取项目根目录
+                project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+                # 构建绝对路径
+                watermark_path = os.path.join(project_root, watermark_path)
+                
             if not os.path.exists(watermark_path):
                 logger.error(f"水印图片文件不存在: {watermark_path}")
                 return None

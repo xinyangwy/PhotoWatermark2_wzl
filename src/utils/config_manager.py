@@ -51,7 +51,7 @@ class ConfigManager:
                     "text_watermark": {
                         "text": "PhotoMark2",
                         "font": "Arial",
-                        "size": 100,
+                        "size": 200,
                         "bold": False,
                         "italic": False,
                         "color": "#FFFFFF",
@@ -199,6 +199,20 @@ class ConfigManager:
                         text_settings['color'] = text_settings['color'].name()
                 elif 'color' not in text_settings or not text_settings['color']:
                     text_settings['color'] = '#FFFFFF'
+                    
+            # 处理图片水印路径，转换为相对路径
+            if 'image_watermark' in settings_copy and 'watermark_path' in settings_copy['image_watermark']:
+                watermark_path = settings_copy['image_watermark']['watermark_path']
+                if watermark_path and os.path.isabs(watermark_path):
+                    # 获取项目根目录
+                    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+                    # 转换为相对路径
+                    try:
+                        relative_path = os.path.relpath(watermark_path, project_root)
+                        settings_copy['image_watermark']['watermark_path'] = relative_path
+                    except ValueError:
+                        # 如果无法转换（例如跨驱动器），保留原始路径
+                        pass
                     
             # 尝试JSON序列化以验证数据结构
             try:
