@@ -4,7 +4,7 @@
         "scale": 100,
         "opacity": 100,
         "position": "top_left",
-        "watermark_path": "D:\\Code\\GitHub\\PhotoWatermark2_wzl\\resources\\watermarks\\下雨.png",
+        "watermark_path": "resources\\watermarks\\下雨.png",
         "tile_mode": true
     },
     "watermark_type": "image"

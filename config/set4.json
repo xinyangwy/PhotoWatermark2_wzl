@@ -1,0 +1,14 @@
+{
+    "image_watermark": {
+        "apply_to_all": false,
+        "scale": 200,
+        "opacity": 80,
+        "position": "top_left",
+        "watermark_path": "resources\\watermarks\\彩虹.png",
+        "margin": 20,
+        "rotation": 0,
+        "tile_mode": false,
+        "tile_spacing": 50
+    },
+    "watermark_type": "image"
+}

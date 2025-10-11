@@ -5,6 +5,7 @@
 ## 应用程序截图
 
 ![PhotoWatermark2界面预览](images/Snipaste_2025-10-11_23-57-35.png)
+![PhotoWatermark2界面预览](images/Snipaste_2025-10-11_00-38-13.png)
 
 ## 功能特点
 
