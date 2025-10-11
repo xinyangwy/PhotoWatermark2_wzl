@@ -31,7 +31,7 @@ class WatermarkPanel(QWidget):
             'text': {
                 'text': 'PhotoMark2',
                 'font': 'Arial',
-                'size': 36,
+                'size': 200,
                 'bold': True,
                 'italic': False,
                 'color': QColor(255, 255, 255),
