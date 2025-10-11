@@ -74,7 +74,12 @@ class WatermarkProcessor:
             
             # 设置字体 - 兼容新旧参数名
             font_family = settings.get('font_family', settings.get('font', 'Arial'))
-            font_size = settings.get('font_size', settings.get('size', 24))
+            # 如果用户没有指定字体大小，使用图片宽度的八分之一作为默认值
+            if 'font_size' not in settings and 'size' not in settings:
+                default_font_size = max(20, image.width() // 8)  # 确保至少20号字体
+                font_size = default_font_size
+            else:
+                font_size = settings.get('font_size', settings.get('size', 24))
             bold = settings.get('bold', False)
             italic = settings.get('italic', False)
             

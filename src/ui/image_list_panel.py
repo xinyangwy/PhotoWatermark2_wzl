@@ -171,7 +171,7 @@ class ImageListPanel(QWidget):
         # 图片列表
         self.image_list = DragDropListWidget()
         self.image_list.setIconSize(QSize(120, 120))  # 设置图标大小
-        self.image_list.setSpacing(8)  # 设置间距
+        self.image_list.setSpacing(1)  # 设置间距（减小为4）
         self.image_list.setSelectionMode(QListWidget.SelectionMode.SingleSelection)
         self.image_list.itemClicked.connect(self.on_item_clicked)
         layout.addWidget(self.image_list)

@@ -3,7 +3,7 @@
         "apply_to_all": false,
         "scale": 100,
         "opacity": 100,
-        "position": "bottom_right",
+        "position": "top_left",
         "watermark_path": "D:\\Code\\GitHub\\PhotoWatermark2_wzl\\resources\\watermarks\\下雨.png",
         "tile_mode": true
     },
