@@ -827,17 +827,23 @@ class WatermarkPanel(QWidget):
         self.current_settings['custom_y'] = position.y()
         self.current_settings['y'] = position.y()
         
-        # 如果位置设置为自定义，则更新UI控件
-        if self.current_settings.get('position') == 'custom':
-            if hasattr(self, 'position_x_spin') and self.position_x_spin:
-                self.position_x_spin.blockSignals(True)
-                self.position_x_spin.setValue(position.x())
-                self.position_x_spin.blockSignals(False)
-                
-            if hasattr(self, 'position_y_spin') and self.position_y_spin:
-                self.position_y_spin.blockSignals(True)
-                self.position_y_spin.setValue(position.y())
-                self.position_y_spin.blockSignals(False)
+        # 将位置设置为自定义，确保拖拽优先级高于预设位置
+        self.current_settings['position'] = 'custom'
+        
+        # 无论当前位置设置如何，都更新UI控件
+        if hasattr(self, 'position_x_spin') and self.position_x_spin:
+            self.position_x_spin.blockSignals(True)
+            self.position_x_spin.setValue(position.x())
+            self.position_x_spin.blockSignals(False)
+            
+        if hasattr(self, 'position_y_spin') and self.position_y_spin:
+            self.position_y_spin.blockSignals(True)
+            self.position_y_spin.setValue(position.y())
+            self.position_y_spin.blockSignals(False)
+        
+        # 更新位置按钮的选择状态
+        for btn_id, btn in self.position_buttons.items():
+            btn.setChecked(btn_id == 'custom')
         
         # 发射设置变更信号，更新预览
         self.settings_changed.emit()
