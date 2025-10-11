@@ -1338,3 +1338,6 @@ NameError: name 'QToolTip' is not defined
 2025-10-12 00:36:59,568 - __main__ - INFO - 应用程序正常退出
 2025-10-12 00:37:09,004 - __main__ - INFO - 应用程序正常退出
 2025-10-12 00:37:15,459 - __main__ - INFO - 应用程序启动成功
+2025-10-12 00:37:25,441 - src.ui.image_list_panel - INFO - 缩略图加载完成
+2025-10-12 00:38:51,491 - __main__ - INFO - 应用程序启动成功
+2025-10-12 00:39:02,697 - src.ui.image_list_panel - INFO - 缩略图加载完成

@@ -776,31 +776,42 @@ class PhotoMarkApp(QMainWindow):
                 # 获取设置的深拷贝，避免修改原始设置
                 settings = self.image_watermark_panel.get_settings()
                 watermark_path = settings.get('watermark_path', '')
+                
+                # 当没有选择水印图片时，自动选择预设水印的第一个图片
                 if not watermark_path or not os.path.exists(watermark_path):
-                    # 当选择新图片时，如果没有选择水印图片，则自动选择预设水印的第一个图片
-                    if hasattr(self, '_is_image_switching') and self._is_image_switching:
-                        # 获取预设水印
-                        preset_watermarks = self.image_watermark_panel.load_preset_watermarks()
-                        if preset_watermarks:
-                            # 选择第一个预设水印
-                            first_watermark_path = next(iter(preset_watermarks.values()))
-                            # 更新设置
-                            self.image_watermark_panel.current_settings['watermark_path'] = first_watermark_path
-                            self.image_watermark_panel.image_path_label.setText(os.path.basename(first_watermark_path))
-                            # 重新获取设置
-                            settings = self.image_watermark_panel.get_settings()
-                            watermark_path = first_watermark_path
-                        else:
-                            # 没有预设水印，不显示错误消息
-                            self._is_image_switching = False
-                            return
+                    # 获取预设水印
+                    preset_watermarks = self.image_watermark_panel.load_preset_watermarks()
+                    if preset_watermarks:
+                        # 选择第一个预设水印
+                        first_watermark_path = next(iter(preset_watermarks.values()))
+                        # 更新设置
+                        self.image_watermark_panel.current_settings['watermark_path'] = first_watermark_path
+                        self.image_watermark_panel.image_path_label.setText(os.path.basename(first_watermark_path))
+                        # 重新获取设置
+                        settings = self.image_watermark_panel.get_settings()
+                        watermark_path = first_watermark_path
+                        # 设置缩放比例为最大值（与之前的功能保持一致）
+                        self.image_watermark_panel.current_settings['scale'] = 200
+                        if hasattr(self.image_watermark_panel, 'scale_slider'):
+                            self.image_watermark_panel.scale_slider.blockSignals(True)
+                            self.image_watermark_panel.scale_slider.setValue(200)
+                            self.image_watermark_panel.scale_slider.blockSignals(False)
                     else:
-                        # 只有用户主动点击预览按钮时才显示错误
-                        QMessageBox.warning(self, "预览失败", "请先选择有效的水印图片")
-                    self._is_image_switching = False
-                    # 如果没有选择水印图片，且不是由于图片切换引起的，或者没有可用的预设水印，则返回
-                    if not watermark_path or not os.path.exists(watermark_path):
+                        # 没有预设水印且不是由于图片切换引起的，显示错误消息
+                        if not (hasattr(self, '_is_image_switching') and self._is_image_switching):
+                            QMessageBox.warning(self, "预览失败", "请先选择有效的水印图片")
+                        # 重置标记
+                        if hasattr(self, '_is_image_switching'):
+                            self._is_image_switching = False
                         return
+                
+                # 重置标记
+                if hasattr(self, '_is_image_switching'):
+                    self._is_image_switching = False
+                
+                # 如果没有选择水印图片，则返回
+                if not watermark_path or not os.path.exists(watermark_path):
+                    return
                 # 创建预览专用设置副本
                 preview_settings = settings.copy()
                 # 预览模式下设置较低的日志级别，避免过多日志
