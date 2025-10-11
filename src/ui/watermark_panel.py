@@ -818,9 +818,31 @@ class WatermarkPanel(QWidget):
         self.current_settings['custom_y'] = value
         self.current_settings['y'] = value
         self.settings_changed.emit()
+        
+    def update_position_from_drag(self, position):
+        """从拖拽操作更新水印位置"""
+        # 更新当前设置中的坐标值
+        self.current_settings['custom_x'] = position.x()
+        self.current_settings['x'] = position.x()
+        self.current_settings['custom_y'] = position.y()
+        self.current_settings['y'] = position.y()
+        
+        # 如果位置设置为自定义，则更新UI控件
+        if self.current_settings.get('position') == 'custom':
+            if hasattr(self, 'position_x_spin') and self.position_x_spin:
+                self.position_x_spin.blockSignals(True)
+                self.position_x_spin.setValue(position.x())
+                self.position_x_spin.blockSignals(False)
+                
+            if hasattr(self, 'position_y_spin') and self.position_y_spin:
+                self.position_y_spin.blockSignals(True)
+                self.position_y_spin.setValue(position.y())
+                self.position_y_spin.blockSignals(False)
+        
+        # 发射设置变更信号，更新预览
+        self.settings_changed.emit()
+        
     
-
-
     # 预设水印相关方法
     def load_preset_watermarks(self):
         """加载预设水印图片"""

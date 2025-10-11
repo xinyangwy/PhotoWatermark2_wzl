@@ -326,8 +326,8 @@ class PhotoMarkApp(QMainWindow):
         # 连接信号槽
         self.connect_signals()
         
-        # 连接拖拽位置信号
-        self.preview_panel.position_changed.connect(self.on_watermark_position_changed)
+        # 连接水印位置拖拽信号
+        self.preview_panel.watermark_position_changed.connect(self.on_watermark_position_changed)
     
     def create_top_toolbar(self):
         """创建顶部工具栏"""
@@ -679,6 +679,22 @@ class PhotoMarkApp(QMainWindow):
         except Exception as e:
             logger.error(f"导入文件夹失败: {str(e)}")
             QMessageBox.critical(self, "导入错误", f"导入文件夹时发生错误:\n{str(e)}")
+            
+    @pyqtSlot(QPoint)
+    def on_watermark_position_changed(self, position):
+        """处理水印位置拖拽改变事件"""
+        logger.debug(f"水印位置改变: x={position.x()}, y={position.y()}")
+        
+        # 获取当前活动的水印面板
+        current_tab_index = self.settings_tabs.currentIndex()
+        
+        if current_tab_index == 0:  # 文本水印
+            self.text_watermark_panel.update_position_from_drag(position)
+        elif current_tab_index == 1:  # 图片水印
+            self.image_watermark_panel.update_position_from_drag(position)
+        
+        # 刷新预览
+        self.preview_watermark()
     
     def start_async_import(self, image_paths: List[str], operation_name: str):
         """开始异步导入"""
