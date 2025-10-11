@@ -115,9 +115,15 @@ class WatermarkProcessor:
                                               text_width, text_height, position, padding, settings)
                 
                 # 绘制背景（如果设置）
-                if 'background' in settings:
-                    bg_color = self._parse_color(settings['background'])
-                    bg_opacity = settings.get('background_opacity', 50) / 100.0
+                # 兼容新旧参数名：bg_color/bg_opacity 或 background/background_opacity
+                if settings.get('background') or settings.get('bg_color'):
+                    # 优先使用bg_color
+                    bg_color_value = settings.get('bg_color', settings.get('background', '#000000'))
+                    bg_color = self._parse_color(bg_color_value)
+                    
+                    # 优先使用bg_opacity
+                    bg_opacity_value = settings.get('bg_opacity', settings.get('background_opacity', 50))
+                    bg_opacity = bg_opacity_value / 100.0
                     bg_color.setAlphaF(bg_opacity)
                     
                     bg_rect = QRect(x - padding, y - padding, 
@@ -252,7 +258,7 @@ class WatermarkProcessor:
             if log_level == 'info':
                 logger.info(f"成功添加图片水印到: {image_path}")
             elif log_level == 'debug':
-                logger.debug(f"成功添加图片水印到: {image_path}")
+                logger.debug(f'当前应用范围设置: apply_to_all={settings.get("apply_to_all")}')
             # 'silent' 模式不记录日志
             
             return QPixmap.fromImage(image)

@@ -11,7 +11,8 @@ import logging
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
                              QScrollArea, QFrame, QSplitter, QSizePolicy,
                              QSlider, QComboBox)
-from PyQt6.QtCore import Qt, pyqtSignal, QPoint, QRect
+from PyQt6.QtCore import Qt, pyqtSignal, QPoint, QRect, QRectF
+from PyQt6.QtWidgets import QToolTip
 from PyQt6.QtGui import QPixmap, QPainter, QMouseEvent, QPen, QColor
 
 # 配置日志
@@ -36,7 +37,7 @@ class DraggableWatermarkLabel(QLabel):
         self.snap_enabled = True  # 启用吸附功能
         self.snap_distance = 10  # 吸附距离（像素）
         self.last_update_pos = QPoint()  # 上次更新位置
-        self.update_interval = 5  # 更新间隔（像素），减少重绘频率
+        self.update_interval = 10  # 增大更新间隔优化性能
         self.setMouseTracking(True)  # 启用鼠标跟踪，提高交互体验
         
     def mousePressEvent(self, event: QMouseEvent):
@@ -56,29 +57,37 @@ class DraggableWatermarkLabel(QLabel):
         
         super().mousePressEvent(event)
     
+    def enterEvent(self, event):
+        """鼠标进入水印区域时显示提示"""
+        QToolTip.showText(
+            event.globalPosition().toPoint(),
+            "拖拽调整水印位置\n按住Shift键临时禁用吸附",
+            msecShowTime=2000
+        )
+        super().enterEvent(event)
+
     def mouseMoveEvent(self, event: QMouseEvent):
         """鼠标移动事件"""
         if self.is_dragging:
             # 计算拖拽偏移量
             delta = event.pos() - self.drag_start_pos
             self.watermark_pos += delta
-            self.drag_start_pos = event.pos()
+            
+            # 检查Shift键状态，临时禁用吸附
+            self.snap_enabled = not (event.modifiers() & Qt.KeyboardModifier.ShiftModifier)
             
             # 限制水印位置在图片范围内
             self.ensure_valid_position()
             
-            # 节流更新机制 - 只有当位置变化超过阈值时才更新
+            # 简化的节流更新机制
             if (abs(self.watermark_pos.x() - self.last_update_pos.x()) >= self.update_interval or 
                 abs(self.watermark_pos.y() - self.last_update_pos.y()) >= self.update_interval):
-                
-                # 强制重绘以提供视觉反馈
-                self.update()
-                
-                # 发送位置变化信号 - 确保发送的是实际图像坐标
                 self.position_changed.emit(self.watermark_pos)
-                
-                # 更新上次更新位置
+                self.setToolTip(f"当前坐标: ({self.watermark_pos.x()},{self.watermark_pos.y()})\n按住Shift键禁用吸附")
+                self.update()
                 self.last_update_pos = QPoint(self.watermark_pos)
+                
+            self.drag_start_pos = event.pos()
         else:
             # 鼠标悬停在水印区域上时改变鼠标形状
             # 优化：减少不必要的矩形计算
@@ -90,9 +99,10 @@ class DraggableWatermarkLabel(QLabel):
             if extended_rect.contains(event.pos()):
                 if self.cursor() != Qt.CursorShape.OpenHandCursor:
                     self.setCursor(Qt.CursorShape.OpenHandCursor)  # 鼠标变为张开的手形
-                # 显示网格辅助对齐
+                # 显示网格辅助对齐和提示
                 if not self.show_grid:
                     self.show_grid = True
+                    self.setToolTip(f"当前坐标: ({self.watermark_pos.x()},{self.watermark_pos.y()})\n按住Shift键禁用吸附")
                     self.update()
             else:
                 if self.cursor() != Qt.CursorShape.ArrowCursor:
@@ -112,8 +122,9 @@ class DraggableWatermarkLabel(QLabel):
             self.unsetCursor()  # 恢复默认鼠标形状
             self.drag_finished.emit()
             self.update()
-            # 确保最后一次位置被正确发送
+            # 确保最终位置同步
             self.position_changed.emit(self.watermark_pos)
+            self.update()
         
         super().mouseReleaseEvent(event)
     

@@ -173,6 +173,10 @@ class PhotoMarkApp(QMainWindow):
         
         # 创建界面
         self.init_ui()
+
+        # 主设置，用于批量处理和在切换图片时重置面板
+        self.master_text_settings = self.text_watermark_panel.get_settings()
+        self.master_image_settings = self.image_watermark_panel.get_settings()
         
         # 加载配置
         self.load_config()
@@ -405,10 +409,56 @@ class PhotoMarkApp(QMainWindow):
     
     @pyqtSlot(str)
     def on_image_selected(self, image_path: str):
-        """图片被选中"""
+        """当从列表中选择新图片时的处理"""
+        if not image_path or not os.path.exists(image_path):
+            self.current_image_path = None
+            self.preview_panel.clear()
+            self.statusbar.showMessage("无效的图片选择")
+            return
+
         self.current_image_path = image_path
-        self.preview_panel.set_image(image_path)
         self.statusbar.showMessage(f"已选择图片: {os.path.basename(image_path)}")
+
+        # 检查当前面板的设置
+        current_tab_index = self.settings_tabs.currentIndex()
+        if current_tab_index == 0: # Text
+            panel = self.text_watermark_panel
+            # 使用默认设置，而不是当前面板的设置
+            default_settings = panel.default_settings['text'].copy()
+            
+            # 计算文本水印字号为当前图片宽度的四分之一
+            try:
+                pixmap = QPixmap(image_path)
+                if not pixmap.isNull():
+                    image_width = pixmap.width()
+                    # 计算图片宽度的四分之一作为字号
+                    font_size = max(12, min(100, image_width // 4))  # 限制字号在12-100之间
+                    default_settings['size'] = font_size
+            except Exception as e:
+                logger.warning(f"计算文本水印字号时出错: {str(e)}")
+                # 出错时保持默认值不变
+            
+            # 只有在明确勾选了"应用到全部"时，才应用主设置
+            if panel.get_settings().get('apply_to_all', False):
+                panel.set_settings(self.master_text_settings.copy())
+            else:
+                panel.set_settings(default_settings)
+        elif current_tab_index == 1: # Image
+            panel = self.image_watermark_panel
+            # 使用默认设置，而不是当前面板的设置
+            default_settings = panel.default_settings['image'].copy()
+            # 只有在明确勾选了"应用到全部"时，才应用主设置
+            if panel.get_settings().get('apply_to_all', False):
+                panel.set_settings(self.master_image_settings.copy())
+            else:
+                panel.set_settings(default_settings)
+        else: # Batch panel
+            self.preview_panel.set_image(image_path)
+            self.preview_watermark()
+            return
+            
+        # 设置图片并刷新预览，确保应用的是默认设置（或全局设置，如果勾选了"应用到全部"）
+        self.preview_panel.set_image(image_path)
         self.preview_watermark()
     
     @pyqtSlot(list)
@@ -419,23 +469,29 @@ class PhotoMarkApp(QMainWindow):
     
     @pyqtSlot()
     def on_settings_changed(self):
-        """水印设置改变"""
+        """当水印设置改变时调用"""
+        current_tab_index = self.settings_tabs.currentIndex()
+        if current_tab_index not in [0, 1]:  # 仅处理文本和图片水印面板
+            return
+
+        panel = self.settings_tabs.currentWidget()
+        settings = panel.get_settings()
+
+        # 只在明确勾选了"应用到全部图片"时才更新主设置
+        if settings.get('apply_to_all', False):
+            # 深拷贝确保主设置和面板设置是独立的对象
+            if current_tab_index == 0:
+                self.master_text_settings = settings.copy()
+            else:
+                self.master_image_settings = settings.copy()
+            self.statusbar.showMessage("水印设置已更新，将应用于所有图片")
+        else:
+            # 未勾选"应用到全部图片"时，这只是一个临时的预览更改，不更新主设置
+            self.statusbar.showMessage("水印设置已更新，仅应用于当前预览图片")
+
+        # 始终更新预览，但不影响其他图片
         if self.current_image_path:
             self.preview_watermark()
-            
-        # 检查是否需要应用到所有图片
-        current_tab = self.settings_tabs.currentIndex()
-        if current_tab == 0:  # 文本水印
-            settings = self.text_watermark_panel.get_settings()
-            if settings.get('apply_to_all', False) and self.image_paths:
-                # 这里不需要立即处理所有图片，只需要将设置保存
-                # 实际的批量处理将在用户点击批量处理按钮时进行
-                pass
-        elif current_tab == 1:  # 图片水印
-            settings = self.image_watermark_panel.get_settings()
-            if settings.get('apply_to_all', False) and self.image_paths:
-                # 同样，这里只需要保存设置
-                pass
     
     @pyqtSlot(QPoint)
     def on_watermark_position_changed(self, position: QPoint):
@@ -559,7 +615,7 @@ class PhotoMarkApp(QMainWindow):
         self.statusbar.showMessage("导入失败")
     
     def preview_watermark(self):
-        """预览水印效果"""
+        """预览水印效果 - 确保只应用于当前图片，不影响批量处理设置"""
         if not self.current_image_path:
             QMessageBox.information(self, "预览", "请先选择一张图片")
             return
@@ -568,27 +624,37 @@ class PhotoMarkApp(QMainWindow):
         
         try:
             if current_tab == 0:  # 文本水印
+                # 获取设置的深拷贝，避免修改原始设置
                 settings = self.text_watermark_panel.get_settings()
+                # 创建预览专用设置副本
+                preview_settings = settings.copy()
                 # 预览模式下设置较低的日志级别，避免过多日志
-                settings['log_level'] = 'debug'
+                preview_settings['log_level'] = 'debug'
+                # 确保预览只应用于当前图片
+                preview_settings['apply_to_all'] = False
                 result_pixmap = self.watermark_processor.add_text_watermark(
-                    self.current_image_path, settings.get('text', ''), settings)
+                    self.current_image_path, preview_settings.get('text', ''), preview_settings)
             elif current_tab == 1:  # 图片水印
+                # 获取设置的深拷贝，避免修改原始设置
                 settings = self.image_watermark_panel.get_settings()
                 watermark_path = settings.get('watermark_path', '')
                 if not watermark_path or not os.path.exists(watermark_path):
                     QMessageBox.warning(self, "预览失败", "请先选择有效的水印图片")
                     return
+                # 创建预览专用设置副本
+                preview_settings = settings.copy()
                 # 预览模式下设置较低的日志级别，避免过多日志
-                settings['log_level'] = 'debug'
+                preview_settings['log_level'] = 'debug'
+                # 确保预览只应用于当前图片
+                preview_settings['apply_to_all'] = False
                 result_pixmap = self.watermark_processor.add_image_watermark(
-                    self.current_image_path, watermark_path, settings)
+                    self.current_image_path, watermark_path, preview_settings)
             else:
                 return
             
             if result_pixmap and not result_pixmap.isNull():
                 self.preview_panel.set_watermarked_image(result_pixmap)
-                self.statusbar.showMessage("水印预览已更新")
+                self.statusbar.showMessage("水印预览已更新，仅应用于当前图片")
             else:
                 QMessageBox.warning(self, "预览失败", "无法生成水印预览")
                 
@@ -795,9 +861,11 @@ class PhotoMarkApp(QMainWindow):
                 settings = self.config_manager.load_settings(file_path)
                 
                 if 'text_watermark' in settings:
-                    self.text_watermark_panel.set_settings(settings['text_watermark'])
+                    self.master_text_settings = settings['text_watermark']
+                    self.text_watermark_panel.set_settings(self.master_text_settings)
                 if 'image_watermark' in settings:
-                    self.image_watermark_panel.set_settings(settings['image_watermark'])
+                    self.master_image_settings = settings['image_watermark']
+                    self.image_watermark_panel.set_settings(self.master_image_settings)
                 if 'output_directory' in settings:
                     self.output_directory = settings['output_directory']
                     self.output_path_label.setText(self.output_directory)
@@ -828,15 +896,16 @@ class PhotoMarkApp(QMainWindow):
         QMessageBox.about(self, "关于 PhotoMark", about_text)
     
     def load_config(self):
-        """加载配置"""
+        """加载默认配置"""
         try:
-            # 尝试加载默认配置
             default_settings = self.config_manager.load_default_settings()
             if default_settings:
                 if 'text_watermark' in default_settings:
-                    self.text_watermark_panel.set_settings(default_settings['text_watermark'])
+                    self.master_text_settings = default_settings['text_watermark']
+                    self.text_watermark_panel.set_settings(self.master_text_settings)
                 if 'image_watermark' in default_settings:
-                    self.image_watermark_panel.set_settings(default_settings['image_watermark'])
+                    self.master_image_settings = default_settings['image_watermark']
+                    self.image_watermark_panel.set_settings(self.master_image_settings)
         except Exception as e:
             logger.warning(f"加载默认配置失败: {str(e)}")
     

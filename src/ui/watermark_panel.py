@@ -58,6 +58,9 @@ class WatermarkPanel(QWidget):
         }
         
         self.current_settings = self.default_settings[self.watermark_type].copy()
+        self.current_settings.update({'position_x': 50, 'position_y': 50})
+        if hasattr(self.parent(), 'preview_panel'):
+            self.parent().preview_panel.watermark_label.position_changed.connect(self.update_watermark_position)
         self.init_ui()
         
     def init_ui(self):
@@ -118,9 +121,19 @@ class WatermarkPanel(QWidget):
         # 添加应用范围设置
         apply_scope_group = QGroupBox("应用范围")
         apply_scope_layout = QVBoxLayout(apply_scope_group)
-        
         self.apply_to_all_check = QCheckBox("是否应用到全部图片")
-        self.apply_to_all_check.setChecked(self.current_settings['apply_to_all'])
+        
+        self.apply_to_all_check.setChecked(False)
+        
+        # 连接预览面板信号
+        if hasattr(self.parent(), 'preview_panel'):
+            self.parent().preview_panel.watermark_label.position_changed.connect(self.update_watermark_position)  # 默认不勾选
+        self.apply_to_all_check.setObjectName("applyToAllCheckbox")
+        self.current_settings = {
+            'apply_to_all': False,
+            # 其他默认设置...
+        }
+        self.apply_to_all_check.setChecked(False)
         self.apply_to_all_check.toggled.connect(self.on_apply_to_all_toggled)
         apply_scope_layout.addWidget(self.apply_to_all_check)
         
@@ -475,9 +488,17 @@ class WatermarkPanel(QWidget):
         layout.addWidget(export_group)
         
     # 应用范围相关方法
+    def update_watermark_position(self, pos):
+        """更新水印位置坐标"""
+        self.current_settings['position_x'] = pos.x()
+        self.current_settings['position_y'] = pos.y()
+        self.settings_changed.emit()
+
     def on_apply_to_all_toggled(self, checked):
         """应用到全部图片选项切换"""
         self.current_settings['apply_to_all'] = checked
+        # 如果取消勾选"应用到全部图片"，设置保持不变，只影响当前预览
+        # 如果勾选"应用到全部图片"，将当前设置应用为主设置
         self.settings_changed.emit()
         
     # 文本水印相关方法
@@ -632,13 +653,81 @@ class WatermarkPanel(QWidget):
         self.quality_label.setText(f"{value}%")
         
     def get_settings(self):
-        """获取当前设置"""
-        return self.current_settings.copy()
+        import copy
+        return copy.deepcopy(self.current_settings)
         
     def set_settings(self, settings):
-        """应用设置"""
+        """应用并更新UI设置"""
+        # 确保从JSON加载的颜色列表能被正确处理
+        if 'color' in settings and isinstance(settings['color'], list):
+            try:
+                settings['color'] = QColor(*settings['color'])
+            except (TypeError, ValueError):
+                settings['color'] = QColor(255, 255, 255) # Fallback
+        if 'bg_color' in settings and isinstance(settings['bg_color'], list):
+            try:
+                settings['bg_color'] = QColor(*settings['bg_color'])
+            except (TypeError, ValueError):
+                settings['bg_color'] = QColor(0, 0, 0) # Fallback
+            
         self.current_settings.update(settings)
-        # 这里应该更新UI控件状态
+
+        # 阻断信号，防止更新UI时触发不必要的信号风暴
+        self.blockSignals(True)
+        for widget in self.findChildren(QWidget):
+            if isinstance(widget, (QLineEdit, QComboBox, QSlider, QCheckBox, QSpinBox)):
+                widget.blockSignals(True)
+
+        try:
+            # 更新通用设置
+            self.apply_to_all_check.setChecked(self.current_settings.get('apply_to_all', False))
+            self.opacity_slider.setValue(self.current_settings.get('opacity', 80))
+            
+            position = self.current_settings.get('position', 'bottom_right')
+            self.set_position(position) # 使用现有方法来更新按钮状态
+            
+            self.margin_spin.setValue(self.current_settings.get('margin', 20))
+            
+            rotation = self.current_settings.get('rotation', 0)
+            self.rotation_slider.setValue(rotation)
+            self.rotation_spin.setValue(rotation)
+
+            if self.watermark_type == 'text':
+                self.text_input.setText(self.current_settings.get('text', ''))
+                self.font_combo.setCurrentText(self.current_settings.get('font', 'Arial'))
+                self.size_spin.setValue(self.current_settings.get('size', 36))
+                self.bold_check.setChecked(self.current_settings.get('bold', False))
+                self.italic_check.setChecked(self.current_settings.get('italic', False))
+                
+                color = self.current_settings.get('color')
+                if not isinstance(color, QColor) or not color.isValid(): color = QColor(255, 255, 255)
+                self.current_settings['color'] = color
+                self.update_color_button()
+                self.update_color_label()
+
+                self.bg_check.setChecked(self.current_settings.get('background', False))
+                bg_color = self.current_settings.get('bg_color')
+                if not isinstance(bg_color, QColor) or not bg_color.isValid(): bg_color = QColor(0, 0, 0)
+                self.current_settings['bg_color'] = bg_color
+                self.update_bg_color_button()
+                self.bg_opacity_slider.setValue(self.current_settings.get('bg_opacity', 50))
+
+            elif self.watermark_type == 'image':
+                watermark_path = self.current_settings.get('watermark_path', '')
+                self.image_path_label.setText(os.path.basename(watermark_path) if watermark_path else "未选择图片")
+                self.highlight_selected_preset(watermark_path)
+                self.scale_slider.setValue(self.current_settings.get('scale', 30))
+                self.tile_check.setChecked(self.current_settings.get('tile_mode', False))
+                self.tile_spacing_slider.setValue(self.current_settings.get('tile_spacing', 50))
+
+        finally:
+            # 恢复信号
+            self.blockSignals(False)
+            for widget in self.findChildren(QWidget):
+                if isinstance(widget, (QLineEdit, QComboBox, QSlider, QCheckBox, QSpinBox)):
+                    widget.blockSignals(False)
+
+        # 所有UI更新完毕后，发送一次信号以触发预览更新
         self.settings_changed.emit()
     
     def update_position_from_drag(self, x: int, y: int):

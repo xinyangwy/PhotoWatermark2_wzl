@@ -45,6 +45,9 @@ dist/
 .env.test.local
 .env.production.local
 
+# 测试配置文件
+images/*.json
+
 # Windows系统文件
 *.lnk
 *.url

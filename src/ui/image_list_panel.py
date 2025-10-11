@@ -280,12 +280,15 @@ class ImageListPanel(QWidget):
             self.image_selected.emit(image_path)
     
     def remove_selected(self):
-        """移除选中的图片"""
-        current_row = self.image_list.currentRow()
-        if current_row >= 0:
-            item = self.image_list.takeItem(current_row)
-            image_path = item.data(1)
-            self.image_paths.remove(image_path)
+        selected_items = self.image_list.selectedItems()
+        for item in selected_items:
+            image_path = item.data(Qt.ItemDataRole.UserRole)
+            if image_path in self.image_paths:
+                self.image_paths.remove(image_path)
+            else:
+                self.logger.warning(f"尝试移除不存在的图片路径: {image_path}")
+            self.image_list.takeItem(self.image_list.row(item))
+        if selected_items:
             self.update_count()
             self.image_list_changed.emit(self.image_paths)
     
