@@ -754,35 +754,7 @@ class WatermarkPanel(QWidget):
         # 所有UI更新完毕后，发送一次信号以触发预览更新
         self.settings_changed.emit()
     
-    def update_position_from_drag(self, x: int, y: int):
-        """从拖拽操作更新位置设置"""
-        # 设置位置为自定义模式，并保存坐标
-        self.current_settings['position'] = 'custom'
-        self.current_settings['custom_x'] = x
-        self.current_settings['custom_y'] = y
-        
-        # 直接设置x和y坐标，用于实时预览
-        self.current_settings['x'] = x
-        self.current_settings['y'] = y
-        
-        # 更新位置按钮状态
-        for pos, btn in self.position_buttons.items():
-            btn.setChecked(pos == 'custom')
-            
-        # 如果没有位置输入框，创建它们
-        if not hasattr(self, 'position_x_spin') or not hasattr(self, 'position_y_spin'):
-            self.create_position_inputs()
-        else:
-            # 更新位置输入框
-            self.position_x_spin.blockSignals(True)
-            self.position_y_spin.blockSignals(True)
-            self.position_x_spin.setValue(x)
-            self.position_y_spin.setValue(y)
-            self.position_x_spin.blockSignals(False)
-            self.position_y_spin.blockSignals(False)
-        
-        # 发送设置变更信号，触发实时预览
-        self.settings_changed.emit()
+
         
     def create_position_inputs(self):
         """创建自定义位置输入框"""
@@ -847,19 +819,7 @@ class WatermarkPanel(QWidget):
         self.current_settings['y'] = value
         self.settings_changed.emit()
     
-    def update_position_from_drag(self, x, y):
-        """从拖拽操作更新水印位置坐标"""
-        self.current_settings['position_x'] = x
-        self.current_settings['position_y'] = y
-        self.current_settings['x'] = x
-        self.current_settings['y'] = y
-        # 更新UI控件
-        if hasattr(self, 'position_x_spin'):
-            self.position_x_spin.setValue(x)
-        if hasattr(self, 'position_y_spin'):
-            self.position_y_spin.setValue(y)
-        # 发射设置变更信号
-        self.settings_changed.emit()
+
 
     # 预设水印相关方法
     def load_preset_watermarks(self):

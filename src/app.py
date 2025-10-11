@@ -642,21 +642,7 @@ class PhotoMarkApp(QMainWindow):
         if self.current_image_path:
             self.preview_watermark()
     
-    @pyqtSlot(QPoint)
-    def on_watermark_position_changed(self, position: QPoint):
-        """水印位置拖拽改变"""
-        # 获取当前活动的水印面板
-        current_tab = self.settings_tabs.currentIndex()
-        
-        # 根据当前选择的水印类型更新相应面板
-        if current_tab == 0:  # 文本水印
-            self.text_watermark_panel.update_position_from_drag(position.x(), position.y())
-        else:  # 图片水印
-            self.image_watermark_panel.update_position_from_drag(position.x(), position.y())
-            
-        # 立即刷新预览
-        if self.current_image_path:
-            self.preview_watermark()
+
     
     def import_images(self):
         """异步导入图片"""
